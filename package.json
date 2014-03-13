@@ -1,0 +1,20 @@
+{
+  "name": "KindaRight",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "3.4.7",
+    "ejs": "*",
+    "mongodb": "*",
+    "nodemailer": "*",
+    "socket.io": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "connect-flash": "*",
+    "bcrypt": "*",
+    "async": "*"
+  }
+}

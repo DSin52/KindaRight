@@ -1,0 +1,35 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: black;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#title {
+	font-size: 35px;
+	font-style: italic;
+}
+
+#modal-forgot {
+	text-align: center;
+}
+
+#modal-create {
+	text-align: center;
+}
+
+#create-formgroup {
+	padding: 15px;
+	width: 300px;
+}
+
+#loginButton {
+	padding-left: 15px;
+}
+
+#userId {
+	font-size: 55px;
+	color: white;
+}
