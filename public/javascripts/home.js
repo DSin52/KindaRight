@@ -69,12 +69,6 @@ $(document).ready(function(){
 						if (data.exists === true) {
 							alert("Username already exists!");
 						} else {
-							// $.post("/create", {"First_Name": firstName, "Last_Name": lastName, "Email": email, "Password": pass, "Username": username}, function (statusCode) {
-							// 	$("#image").submit();
-							// 	alert("Account Created!");
-							// 	$("#createModal").modal("toggle");
-							// 	clearInputs();
-							// });
 							$("#create").submit();
 						}
 					});

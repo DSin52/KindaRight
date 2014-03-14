@@ -11,8 +11,15 @@ var LocalStrategy = require('passport-local').Strategy;
 var sanitizer = require("./routes/controllers/sanitizer.js");
 var crypto = require("crypto");
 var fs = require("fs");
+var ObjectID = require('mongodb').ObjectID;
 var async = require("async");
+var mongodb = require("mongodb");
+var MongoClient = require("mongodb").MongoClient;
+var Server = require("mongodb").Server;
+var Db = require("mongodb").Db;
 var app = express();
+var _db;
+var Grid = mongodb.Grid;
 
 //put in for future https support
 var options = {
@@ -31,17 +38,14 @@ app.use(express.bodyParser());
 app.use(express.static(path.join(__dirname, "public")));
 app.use(passport.initialize());
 app.use(passport.session());
-
-//middleware to attach database instance to
-app.use("/validation", function (req, res, next) {
-	db.connectToDB(function (error, database) {
-		if (error) {
-			next(error);
-		}
-		else {
-			next();
-		}
-	});
+app.use(function (req, res, next) {
+	MongoClient.connect("mongodb://127.0.0.1:27017/KindaRight", function (err, db) {
+	    	if (err) {
+	    		throw err;
+	    	}
+	    	_db = db;
+	    	next();
+	    });
 });
 
 //Used for establishing session support
@@ -50,7 +54,7 @@ passport.use(new LocalStrategy({
 	"passwordField": "Password"
 },
   function(email, password, done) {
-    db.find({ "Email": email, "Password": password }, function (err, user, info) {
+    db.find(_db, { "Email": email, "Password": password }, function (err, user, info) {
     	if (user) {
 	      user.id = user._id;
 	      done(err, user, "Succesfully Authenticated!");
@@ -66,31 +70,9 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  db.find({"_id": id}, function (err, user) {
+  db.find(_db, {"_id": id}, function (err, user) {
     done(err, user);
   });
-});
-
-app.use("/create", function (req, res, next) {
-	db.connectToDB(function (error, database) {
-		if (error) {
-			next(error);
-		}
-		else {
-			next();
-		}
-	});
-});
-
-app.use("/search", function (req, res, next) {
-	db.connectToDB(function (error, database) {
-		if (error) {
-			next(error);
-		}
-		else {
-			next();
-		}
-	});
 });
 
 // development only
@@ -158,23 +140,27 @@ app.post("/create", function (req, res) {
 		if (err) {
 			throw err;
 		} else {
-			User.Profile_Picture = data;
+	 		var grid = new Grid(_db, 'Users');  
+	 		var buffer = new Buffer(data);
+		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+			    if(!err) {
+			      console.log("Finished writing file to Mongo");
+			    }
+			    User.Profile_Picture = fileInfo._id;
+			    db.insertIntoDB(_db, User, function(err) {
+					if (err) {
+						res.send(res.statusCode);
+						console.log(err);
+					}
+					router.route(req, res, "home");
+				});
+	  		});
 		}
 	});
-
-
-	db.insertIntoDB(User, function(err) {
-		if (err) {
-			res.send(res.statusCode);
-			console.log(err);
-		}
-		router.route(req, res, "home");
-	});
-	// res.send(res.statusCode, {});
 });
 
 app.post("/validation", function (req, res) {
-		db.checkExists(req.body, function(err, acct) {
+		db.checkExists(_db, req.body, function(err, acct) {
                 if (err) {
                         res.send(500, {Error: "Something went wrong!"});
                         return;
@@ -195,7 +181,7 @@ app.get("/logout", function (req, res) {
 
 app.get("/search", function (req, res) {
 	sanitizer.sanitizeText(req.query.term, function (query){
-		db.search(query, function (err, docs) {
+		db.search(_db, query, function (err, docs) {
 			if (err) {
                 res.send(500, {Error: "Something went wrong sanitizing text!"});
 				return;
@@ -206,7 +192,25 @@ app.get("/search", function (req, res) {
 });
 
 app.get("/users/:userid", function (req, res) {
-	router.route(req, res, "user", req.param("userid"));
+	db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+		var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
+		console.log("Path is: " + account.Profile_Picture);
+		router.route(req, res, "user", {"Profile_Picture": imgPath, "Username": account.Username, "First_Name": account.First_Name, "Last_Name": account.Last_Name});
+	});
+});
+
+app.get("/users/picture/:pictureid", function (req, res) {
+	console.log(req.params.pictureid);
+	var grid = new Grid(_db, 'Users');  
+	grid.get(new ObjectID(req.params.pictureid), function (err, data) {
+		if (err) {
+			res.send(500, {Error: "Error in finding picture"});
+		} else {
+			res.writeHead(200, {"Content-Type": "image/png"});
+			res.write(data, "binary");
+			res.end();
+		}
+	});
 });
 
 //starts the server

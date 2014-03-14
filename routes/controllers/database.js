@@ -1,42 +1,42 @@
-var MongoClient = require("mongodb").MongoClient;
-var Server = require("mongodb").Server;
-var Db = require("mongodb").Db;
+// var MongoClient = require("mongodb").MongoClient;
+// var Server = require("mongodb").Server;
+// var Db = require("mongodb").Db;
 var bcrypt = require("bcrypt");
 var async = require("async");
 
-var mongoDB = null;
+// var mongoDB = null;
 
-function connectToDB(callback) {
+// function connectToDB(callback) {
 
-    if(mongoDB) {
-      callback(null, mongoDB);
-      return;
-    }
+//     if(mongoDB) {
+//       callback(null, mongoDB);
+//       return;
+//     }
 
-    MongoClient.connect("mongodb://127.0.0.1:27017/KindaRight", function (err, db) {
+//     MongoClient.connect("mongodb://127.0.0.1:27017/KindaRight", function (err, db) {
     	
-    	if (err) {
-    		throw err;
-    	}
+//     	if (err) {
+//     		throw err;
+//     	}
 
-    	mongoDB = db.collection("Users");
-    		if (err) {
-    			throw err;
-    		}
-    		callback();
-    });
-}
+//     	mongoDB = db.collection("Users");
+//     		if (err) {
+//     			throw err;
+//     		}
+//     		callback();
+//     });
+// }
 
-function closeDB(callback) {
-	mongoDB.close();
-	mongoDB = null;
-}
+// function closeDB(callback) {
+// 	mongoDB.close();
+// 	mongoDB = null;
+// }
 
-function insertIntoDB(account, done) {
+function insertIntoDB(db, account, done) {
 
 	async.waterfall([
 		function (callback) {
-			mongoDB.findOne({Email: account.Email}, callback);
+			db.collection("Users").findOne({Email: account.Email}, callback);
 		},
 		function (acct, callback) {
 			if (acct) {
@@ -53,7 +53,7 @@ function insertIntoDB(account, done) {
 		},
 		function (hashedPassword, callback) {
 			account.Password = hashedPassword;
-			mongoDB.insert(account, callback);
+			db.collection("Users").insert(account, callback);
 		}
 		],
 		function (err, results) {
@@ -65,9 +65,9 @@ function insertIntoDB(account, done) {
 		});
 }
 
-function checkExists(account, callback) {
+function checkExists(db, account, callback) {
 	
-	mongoDB.findOne(account, function (err, acct) {
+	db.collection("Users").findOne(account, function (err, acct) {
 
 		var verification = {
 			exists: false
@@ -81,10 +81,10 @@ function checkExists(account, callback) {
 	});
 }
 
-function find(query, callback) {
+function find(db, query, callback) {
 	async.waterfall([
 		function (next) {
-			mongoDB.findOne({"Email": query.Email}, next);
+			db.collection("Users").findOne({"Email": query.Email}, next);
 		},
 		function (account, next) {
 			bcrypt.compare(query.Password, account.Password, function (err, res) {
@@ -101,7 +101,11 @@ function find(query, callback) {
 		});
 }
 
-function search(query, callback) {
+function getUser(db, query, callback) {
+	db.collection("Users").findOne(query, callback);
+}
+
+function search(db, query, callback) {
 	var projection = {
 		"First_Name": true,
 		"Last_Name": true,
@@ -109,11 +113,11 @@ function search(query, callback) {
 		"Username": true,
 		"_id": false
 		};		
-	mongoDB.find(query, projection).toArray(callback);
+	db.collection("Users").find(query, projection).toArray(callback);
 }
 
-module.exports.connectToDB = connectToDB;
 module.exports.insertIntoDB = insertIntoDB;
 module.exports.checkExists = checkExists;
 module.exports.find = find;
+module.exports.getUser = getUser;
 module.exports.search = search;
