@@ -9,8 +9,8 @@
 
   </head>
   <body>
-  
-  <!-- NavBar Object -->
+   
+    <!-- NavBar Object -->
 	  <nav class="navbar navbar-inverse" role="navigation">
 	    <div class="navbar-header">
 	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></button>
@@ -18,7 +18,7 @@
 	    </div>
 	    <div class="collapse navbar-collapse" id="navbar-collapse-1">
 	    <form class="navbar-form pull-right" id="logout" method="POST" action="/logout">
-	    	<button type="submit" class="btn btn-info" id="accountButton">Account Settings</button>
+	    	<button type="submit" class="btn btn-info" id="accountButton">My Account</button>
 	        <button type="submit" class="btn btn-success" id="logOutButton">Log Out</button>
 	    </form>
 		   <div class="col-xs-8 col-sm-6 pull-right">
@@ -34,16 +34,51 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
-  	    <p id="userId"><%= Username %>: <%= First_Name %> <%=Last_Name %></p>
-		<img src=<%=Profile_Picture %> height="150" width="125">
-	    <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button>
+
+	<div class="container" id="repo">
+		    <form class="form-horizontal" id="repo_form" method="POST" action="/repository" enctype="multipart/form-data">
+				<fieldset>
+
+				<!-- Form Name -->
+				<legend>Repository Creation</legend>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="repo_name">Respository Name</label>  
+				  <div class="col-md-4">
+				  <input id="repo_name" name="repo_name" type="text" placeholder="Enter name" class="form-control input-md">
+				    
+				  </div>
+				</div>
+
+				<!-- File Button --> 
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="repo_pics">Select multiple pictures</label>
+				  <div class="col-md-4">
+				    <input id="repo_pics" name="repo_pics" class="input-file" type="file" multiple="multiple">
+				  </div>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+				  <label class="col-md-4 control-label" for="create_repo"></label>
+				  <div class="col-md-4">
+				    <button id="create_repo" name="create_repo" class="btn btn-success">Create Repository</button>
+				  </div>
+				</div>
+
+				</fieldset>
+			</form>
+	</div>
+	
 
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-  <script src="../ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../js/jquery.cookie.js"></script>
+  <script src="../../ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../../js/jquery.cookie.js"></script>
   <script type="text/javascript" src="/javascripts/main.js"></script>
+  <script type="text/javascript" src="/javascripts/repository.js"></script>
   <!-- End Script References -->
   </body>
 </html>

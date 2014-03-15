@@ -17,6 +17,8 @@ function route(req, res, webpage, options, callback)
 		res.render("main", options);
 	} else if (webpage === "user") {
 		res.render("user", options);
+	} else if (webpage === "settings") {
+		res.render("settings", options);
 	} else {
 		res.render("not_found");
 	}

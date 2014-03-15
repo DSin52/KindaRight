@@ -81,7 +81,11 @@ if ("development" == app.get("env")) {
 }
 
 app.get("/", function (req, res) {
-	router.route(req, res, "home");
+	if (req.cookies.loggedIn) {
+		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, "Email": req.cookies.loggedIn.Email, "First_Name": req.cookies.loggedIn.First_Name, "Last_Name": req.cookies.loggedIn.Last_Name});
+	} else {
+		router.route(req, res, "home");
+	}
 });
 
 app.get("/create", function (req, res) {
@@ -102,12 +106,13 @@ app.post("/main", function(req, res, next) {
       	return next(err); 
       }
       var minute = 500000;
-      res.cookie("loggedIn", {"Email": user.Email, "First_Name": user.First_Name, "Last_Name": user.Last_Name}, {"maxAge": minute});
+      res.cookie("loggedIn", {"Username": user.Username, "Email": user.Email, "First_Name": user.First_Name, "Last_Name": user.Last_Name}, {"maxAge": minute});
       return router.route(req, res, "main", 
       	{
       		"Email": user.Email, 
       	 	"First_Name": user.First_Name, 
-      	 	"Last_Name": user.Last_Name
+      	 	"Last_Name": user.Last_Name,
+      	 	"Username": user.Username
       	});
     });
   })(req, res, next);
@@ -115,9 +120,17 @@ app.post("/main", function(req, res, next) {
 
 app.get("/main", function (req, res) {
 	if (req.cookies.loggedIn) {
-		router.route(req, res, "main", {"Email": req.cookies.loggedIn.Email, "First_Name": req.cookies.loggedIn.First_Name, "Last_Name": req.cookies.loggedIn.Last_Name});
+		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, "Email": req.cookies.loggedIn.Email, "First_Name": req.cookies.loggedIn.First_Name, "Last_Name": req.cookies.loggedIn.Last_Name});
 	} else {
 		return res.redirect("/");
+	}
+});
+
+app.get("/me", function (req, res) {
+	if (req.cookies.loggedIn) {
+		res.send(200, req.cookies.loggedIn);
+	} else {
+		res.send(404);
 	}
 });
 
@@ -126,7 +139,6 @@ app.get("/create", function (req, res) {
 });
 
 app.post("/create", function (req, res) {
-	console.log("Files: " + JSON.stringify(req.files));
 	console.log(req.body);
 	var User = {
 		"First_Name": req.body.First_Name,
@@ -140,7 +152,7 @@ app.post("/create", function (req, res) {
 		if (err) {
 			throw err;
 		} else {
-	 		var grid = new Grid(_db, 'Users');  
+	 		var grid = new Grid(_db, 'Profile_Pictures');  
 	 		var buffer = new Buffer(data);
 		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
 			    if(!err) {
@@ -192,26 +204,116 @@ app.get("/search", function (req, res) {
 });
 
 app.get("/users/:userid", function (req, res) {
-	db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
-		var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
-		console.log("Path is: " + account.Profile_Picture);
-		router.route(req, res, "user", {"Profile_Picture": imgPath, "Username": account.Username, "First_Name": account.First_Name, "Last_Name": account.Last_Name});
-	});
+	if (req.cookies.loggedIn) {
+		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
+			console.log("Path is: " + account.Profile_Picture);
+			router.route(req, res, "user", {"Profile_Picture": imgPath, "Username": account.Username, "First_Name": account.First_Name, "Last_Name": account.Last_Name});
+		});
+	}
+	else {
+		return res.redirect("/");
+	}
 });
 
 app.get("/users/picture/:pictureid", function (req, res) {
-	console.log(req.params.pictureid);
-	var grid = new Grid(_db, 'Users');  
-	grid.get(new ObjectID(req.params.pictureid), function (err, data) {
-		if (err) {
-			res.send(500, {Error: "Error in finding picture"});
-		} else {
-			res.writeHead(200, {"Content-Type": "image/png"});
-			res.write(data, "binary");
-			res.end();
-		}
-	});
+	if (req.cookies.loggedIn) {
+		var grid = new Grid(_db, 'Profile_Pictures');  
+		grid.get(new ObjectID(req.params.pictureid), function (err, data) {
+			if (err) {
+				res.send(500, {Error: "Error in finding picture"});
+			} else {
+				res.writeHead(200, {"Content-Type": "image/png"});
+				res.write(data, "binary");
+				res.end();
+			}
+		});
+	}
+	else {
+		return res.redirect("/");
+	}
 });
+
+app.get("/settings/:userid", function (req, res) {
+	if (req.cookies.loggedIn) {
+		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
+			console.log("Path is: " + account.Profile_Picture);
+			router.route(req, res, "settings", {"Profile_Picture": imgPath, "Username": account.Username, "First_Name": account.First_Name, "Last_Name": account.Last_Name});
+		});	
+	} else {
+		res.redirect("/");
+	}
+});
+
+app.get("/repository/create/:userid", function (req, res) {
+	res.render("repository");
+});
+
+app.post("/repository", function (req, res) {
+
+	if (req.cookies.loggedIn) {
+		if (req.files) {
+			// for (var i = 0; i < req.files.repo_pics.length; i++) {
+				console.log(req.files);
+				if (req.files.repo_pics && req.files.repo_pics.length)
+				{
+					fs.readFile(req.files.repo_pics[0].path, function (err, data) {
+						var grid = new Grid(_db, 'Repositories');  
+				 		var buffer = new Buffer(data);
+					    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+					    	console.log(fileInfo._id);
+					    	var obj = [];
+				    		var obj2 = {};
+				    		obj2[req.body.repo_name] = fileInfo._id;;
+					    	obj[0] = obj2;
+					    	obj[req.body.repo_name] = fileInfo._id;
+						    db.findAndModify(_db, {"Username": req.cookies.loggedIn.Username}, obj, function (err, account) {
+						    	if (err) {
+						    		res.send(500);
+						    	} else {
+						    		res.redirect("/");
+						    	}
+						    });
+				  		});
+					});
+				} else {
+					fs.readFile(req.files.repo_pics.path, function (err, data) {
+						var grid = new Grid(_db, 'Repositories');  
+				 		var buffer = new Buffer(data);
+					    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+					    	console.log(fileInfo._id);
+					    	var obj = {};
+					    	obj[req.body.repo_name] = fileInfo._id;
+						    db.findAndModify(_db, {"Username": req.cookies.loggedIn.Username}, obj, function (err, account) {
+						    	if (err) {
+						    		res.send(500);
+						    	} else {
+						    		res.redirect("/");
+						    	}
+						    });
+				  		});
+					});
+				}
+			} 
+		} else {
+			return res.redirect("/");
+		}
+});
+
+// app.post("/update", function (req, res) {
+// 	if (req.cookies.loggedIn) {
+// 		db.updateUser(_db, req, function (err, updatedCount) {
+// 			if (err) {
+// 				res.send(500, {Error: "Error in finding picture"});
+// 			} else {
+// 				res.redirect("/");
+// 			}
+// 		});
+// 	} else {
+// 		res.redirect("/");
+// 	}
+// });
 
 //starts the server
 app.listen(app.get("port"), function() {

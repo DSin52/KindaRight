@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>KindaRight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
+    <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
+
+  </head>
+  <body>
+  
+    <!-- NavBar Object -->
+	  <nav class="navbar navbar-inverse" role="navigation">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></button>
+	      <a class="navbar-brand" id="title" href="http://localhost:3000/main">KindaRight</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+	    <form class="navbar-form pull-right" id="logout" method="POST" action="/logout">
+	    	<button type="submit" class="btn btn-info" id="accountButton">My Account</button>
+	        <button type="submit" class="btn btn-success" id="logOutButton">Log Out</button>
+	    </form>
+		   <div class="col-xs-8 col-sm-6 pull-right">
+	        <form class="navbar-form" role="search">
+	          <div class="input-group">
+	            <input type="text" class="form-control" placeholder="Search" name="search" id="searchbar">
+	            <div class="input-group-btn">
+	              <button class="btn btn-default" type="submit" id="searchbutton"><span class="glyphicon glyphicon-search"></span></button>
+	            </div>
+	          </div>
+	        </form>
+	      </div>
+	    </div>
+	  </nav>
+  	<!-- End NavBar Object -->
+
+
+  	<!-- Main Settings Form
+  	<div id="settings_form" class="container">
+  	<form class="form-horizontal" id="update_form" method="POST" action="/update" enctype="multipart/form-data">
+		<fieldset>
+
+		<form class="form-horizontal">
+		<fieldset>
+
+		<legend><%=Username%></legend>
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="update_email">Username</label>  
+		  <div class="col-md-4">
+		  <input id="username" name="sername" type="text" value=<%=Username%> class="form-control input-md" readonly>
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="update_email">Update Email</label>  
+		  <div class="col-md-4">
+		  <input id="update_email" name="update_email" type="text" placeholder="Update Email" class="form-control input-md">
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="current_password">Current Password</label>
+		  <div class="col-md-4">
+		    <input id="current_password" name="current_password" type="password" placeholder="Current Password" class="form-control input-md">
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="new_password">New Password</label>
+		  <div class="col-md-4">
+		    <input id="new_password" name="passwordinput" type="password" placeholder="New Password" class="form-control input-md">
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="reenter_password">Re-Enter Password</label>
+		  <div class="col-md-4">
+		    <input id="reenter_password" name="reenter_password" type="password" placeholder="Re-Enter New Password" class="form-control input-md">
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="update_profile">Update Profile Picture</label>
+		  <div class="col-md-4">
+		    <input id="update_profile" name="update_profile" class="input-file" type="file">
+		  </div>
+		</div>
+
+		<div class="form-group">
+		  <label class="col-md-4 control-label" for="update_account"></label>
+		  <div class="col-md-4">
+		    <button id="update_account" name="update_account" class="btn btn-primary">Update Account</button>
+		  </div>
+		</div>
+
+		</fieldset>
+	</form>
+	</div>
+
+ 	 -->
+
+  <!-- Script References -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+  <script src="../ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="/javascripts/main.js"></script>
+  <script type="text/javascript" src="/javascripts/settings.js"></script>
+  <!-- End Script References -->
+  </body>
+</html>

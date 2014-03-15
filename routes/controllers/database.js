@@ -1,37 +1,7 @@
-// var MongoClient = require("mongodb").MongoClient;
-// var Server = require("mongodb").Server;
-// var Db = require("mongodb").Db;
 var bcrypt = require("bcrypt");
 var async = require("async");
-
-// var mongoDB = null;
-
-// function connectToDB(callback) {
-
-//     if(mongoDB) {
-//       callback(null, mongoDB);
-//       return;
-//     }
-
-//     MongoClient.connect("mongodb://127.0.0.1:27017/KindaRight", function (err, db) {
-    	
-//     	if (err) {
-//     		throw err;
-//     	}
-
-//     	mongoDB = db.collection("Users");
-//     		if (err) {
-//     			throw err;
-//     		}
-//     		callback();
-//     });
-// }
-
-// function closeDB(callback) {
-// 	mongoDB.close();
-// 	mongoDB = null;
-// }
-
+var Grid = require("mongodb").Grid;
+var fs = require("fs");
 function insertIntoDB(db, account, done) {
 
 	async.waterfall([
@@ -53,6 +23,7 @@ function insertIntoDB(db, account, done) {
 		},
 		function (hashedPassword, callback) {
 			account.Password = hashedPassword;
+			account.Repositories = [];
 			db.collection("Users").insert(account, callback);
 		}
 		],
@@ -116,8 +87,69 @@ function search(db, query, callback) {
 	db.collection("Users").find(query, projection).toArray(callback);
 }
 
+function updateUser(db, req, callback) {
+	parseBody(req, function (err, updatedObject) {
+		if(!isEmpty(updatedObject)) {
+			var args = {
+		        'query'     : { Username: req.body.Username }, //getId() returns empty string if not set
+		        'update'    : { $set : updatedObject},
+		        'new'       : true,
+		    };
+			db.collection("Users").findAndModify(args, callback);
+		}
+	});
+}
+
+function parseBody(req, callback) {
+	var updatedObject = {};
+	if (req.body.update_email && req.body.update_email.length > 0) {
+		updatedObject.Email = req.body.update_email;
+	}
+	if (req.body.passwordinput && req.body.passwordinput.length > 0) {
+			bcrypt.genSalt(3, function (err, salt) {
+				bcrypt.hash(account.Password, salt, function(err, hashedPassword) {
+					if (err) {
+						return callback("Error in updated password!");
+					}
+					updatedObject.Password = hashedPassword;
+				});
+			});
+	}
+	// if (req.files.update_profile.size > 0) {
+	// 	fs.readFile(req.files.update_profile.path, function (err, data) {
+	// 		if (err) {
+	// 			throw err;
+	// 		} else {
+	// 	 		var grid = new Grid(_db, 'Users');  
+	// 	 		var buffer = new Buffer(data);
+	// 		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+	// 			    if(err) {
+	// 			      return callback("Error in updated profile picture!");
+	// 			    }
+	// 			    updatedObject.Profile_Picture = fileInfo._id;
+	// 	  		});
+	// 		}
+	// 	});
+	// }
+	return callback(null, updatedObject);
+}
+
+function isEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+function findAndModify(db, query, data, callback) {
+	db.collection("Users").findAndModify(query, null, {$addToSet: {"Repositories": data}}, callback);
+}
+
 module.exports.insertIntoDB = insertIntoDB;
 module.exports.checkExists = checkExists;
 module.exports.find = find;
 module.exports.getUser = getUser;
 module.exports.search = search;
+module.exports.updateUser = updateUser;
+module.exports.findAndModify = findAndModify;

@@ -15,6 +15,6 @@
     "passport-local": "*",
     "connect-flash": "*",
     "bcrypt": "*",
-    "async": "*"
+    "async": "*",
   }
 }

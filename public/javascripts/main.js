@@ -1,8 +1,8 @@
 $(document).ready(function(event) {
 
-	$("#logOutButton").click(function (event) {
-		$("#logout").submit();
-	});
+  $("#logOutButton").click(function (event) {
+    $("#logout").submit();
+  });
 
   $( "#searchbar" ).autocomplete({
         minLength: 1,
@@ -28,4 +28,36 @@ $(document).ready(function(event) {
               .appendTo( ul );
             }
       };
+
+    
+
+  function showAccountButton() {
+    if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {
+      $("#accountButton").text("Account Settings");
+      $("#accountButton").click(function (event) {
+          event.preventDefault();
+          window.location.href="/settings/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
+      });
+    } else {
+      $("#accountButton").text("My Account");
+      $("#accountButton").click(function (event) {
+          event.preventDefault();
+          window.location.href = "/users/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
+      });
+    }
+  }
+
+  function showRepositoryButton() {
+    if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {
+      $("#repositoryButton").text("Create Repository");
+      $("#repositoryButton").click(function (event) {
+          window.location.href="/repository/create/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
+      });
+    } else {
+      $("#repositoryButton").toggle(false);
+    }
+  }
+
+  showAccountButton();
+  showRepositoryButton();
 });

@@ -33,3 +33,11 @@ a {
 	font-size: 55px;
 	color: white;
 }
+
+#settings_form {
+	background-color: white;
+}
+
+#repo {
+	background-color: gray;
+}
