@@ -19,6 +19,7 @@ var Server = require("mongodb").Server;
 var Db = require("mongodb").Db;
 var app = express();
 var _db;
+var _ = require("underscore");
 var Grid = mongodb.Grid;
 
 //put in for future https support
@@ -139,7 +140,6 @@ app.get("/create", function (req, res) {
 });
 
 app.post("/create", function (req, res) {
-	console.log(req.body);
 	var User = {
 		"First_Name": req.body.First_Name,
 		"Last_Name": req.body.Last_Name,
@@ -155,9 +155,6 @@ app.post("/create", function (req, res) {
 	 		var grid = new Grid(_db, 'Profile_Pictures');  
 	 		var buffer = new Buffer(data);
 		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
-			    if(!err) {
-			      console.log("Finished writing file to Mongo");
-			    }
 			    User.Profile_Picture = fileInfo._id;
 			    db.insertIntoDB(_db, User, function(err) {
 					if (err) {
@@ -206,9 +203,21 @@ app.get("/search", function (req, res) {
 app.get("/users/:userid", function (req, res) {
 	if (req.cookies.loggedIn) {
 		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+			var repositories = [];
+			for (var key in account.Repositories) {
+				console.log(key);
+				repositories.push(key);
+			}
 			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
-			console.log("Path is: " + account.Profile_Picture);
-			router.route(req, res, "user", {"Profile_Picture": imgPath, "Username": account.Username, "First_Name": account.First_Name, "Last_Name": account.Last_Name});
+			router.route(req, res, "user", 
+				{
+					"Profile_Picture": imgPath, 
+					"Username": account.Username, 
+					"First_Name": account.First_Name, 
+					"Last_Name": account.Last_Name,
+					"Repositories": repositories
+				}
+			);
 		});
 	}
 	else {
@@ -238,7 +247,6 @@ app.get("/settings/:userid", function (req, res) {
 	if (req.cookies.loggedIn) {
 		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
 			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
-			console.log("Path is: " + account.Profile_Picture);
 			router.route(req, res, "settings", {"Profile_Picture": imgPath, "Username": account.Username, "First_Name": account.First_Name, "Last_Name": account.Last_Name});
 		});	
 	} else {
@@ -254,51 +262,61 @@ app.post("/repository", function (req, res) {
 
 	if (req.cookies.loggedIn) {
 		if (req.files) {
-			// for (var i = 0; i < req.files.repo_pics.length; i++) {
-				console.log(req.files);
 				if (req.files.repo_pics && req.files.repo_pics.length)
 				{
-					fs.readFile(req.files.repo_pics[0].path, function (err, data) {
-						var grid = new Grid(_db, 'Repositories');  
-				 		var buffer = new Buffer(data);
-					    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
-					    	console.log(fileInfo._id);
-					    	var obj = [];
-				    		var obj2 = {};
-				    		obj2[req.body.repo_name] = fileInfo._id;;
-					    	obj[0] = obj2;
-					    	obj[req.body.repo_name] = fileInfo._id;
-						    db.findAndModify(_db, {"Username": req.cookies.loggedIn.Username}, obj, function (err, account) {
-						    	if (err) {
-						    		res.send(500);
-						    	} else {
-						    		res.redirect("/");
-						    	}
-						    });
-				  		});
+					db.useGridFS(_db, req, "repo_pics", "Repositories", true, function (err, data) {
+						if (err) {
+							res.send(500);
+						} else {
+							res.redirect("/");
+						}
 					});
 				} else {
-					fs.readFile(req.files.repo_pics.path, function (err, data) {
-						var grid = new Grid(_db, 'Repositories');  
-				 		var buffer = new Buffer(data);
-					    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
-					    	console.log(fileInfo._id);
-					    	var obj = {};
-					    	obj[req.body.repo_name] = fileInfo._id;
-						    db.findAndModify(_db, {"Username": req.cookies.loggedIn.Username}, obj, function (err, account) {
-						    	if (err) {
-						    		res.send(500);
-						    	} else {
-						    		res.redirect("/");
-						    	}
-						    });
-				  		});
+					db.useGridFS(_db, req, "repo_pics", "Repositories", false, function (err, data) {
+						if (err) {
+							res.send(500);
+						} else {
+							res.redirect("/");
+						}
 					});
 				}
 			} 
 		} else {
 			return res.redirect("/");
 		}
+});
+
+app.get("/repository/:userid/:repository", function (req, res) {
+	if (req.cookies.loggedIn) {
+		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+		if (err) {
+			res.send(500);
+		} else if (!account) {
+			res.send(404);
+		} else {
+			var images = [];
+			for (var i = 0; i < account.Repositories[req.params.repository].length; i++) {
+				images[i] = "http://localhost:3000/get/repository/" + account.Repositories[req.params.repository][i];
+			}
+			router.route(req, res, "view_repository", {"Repo": images});
+		}
+	});
+	} else {
+		return res.redirect("/");
+	}
+});
+
+app.get("/get/repository/:pictureid", function (req, res) {
+	var grid = new Grid(_db, 'Repositories');  
+		grid.get(new ObjectID(req.params.pictureid), function (err, data) {
+			if (err) {
+				res.send(500, {Error: "Error in finding picture"});
+			} else {
+				res.writeHead(200, {"Content-Type": "image/png"});
+				res.write(data, "binary");
+				res.end();
+			}
+		});
 });
 
 // app.post("/update", function (req, res) {

@@ -16,5 +16,6 @@
     "connect-flash": "*",
     "bcrypt": "*",
     "async": "*",
+    "underscore": "*"
   }
 }

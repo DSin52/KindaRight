@@ -36,6 +36,7 @@ $(document).ready(function(event) {
       $("#accountButton").text("Account Settings");
       $("#accountButton").click(function (event) {
           event.preventDefault();
+          alert("yes");
           window.location.href="/settings/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
       });
     } else {
@@ -58,6 +59,13 @@ $(document).ready(function(event) {
     }
   }
 
+  function repoLaunch() {
+      $('#repos li').click(function() {
+        window.location.href = "/repository/" + JSON.parse($.cookie().loggedIn.substring(2)).Username + "/" + $(this).text();
+    });
+  }
+
   showAccountButton();
   showRepositoryButton();
+  repoLaunch();
 });

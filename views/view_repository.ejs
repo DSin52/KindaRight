@@ -34,15 +34,11 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
-  	    <p id="userId"><%= Username %>: <%= First_Name %> <%=Last_Name %></p>
-		<img src=<%=Profile_Picture %> height="150" width="125">
-	    <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button>
 
-
-		<% if (Repositories.length) { %>
+		<% if (Repo.length) { %>
 		  <ul id="repos">
-		    <% Repositories.forEach(function(name){ %>
-		      <li><%= name %></li>
+		    <% Repo.forEach(function(name){ %>
+		      <li><img src=<%=name%> height="150" width="125"></li>
 		    <% }) %>
 		  </ul>
 		<% } %>

@@ -23,7 +23,7 @@ function insertIntoDB(db, account, done) {
 		},
 		function (hashedPassword, callback) {
 			account.Password = hashedPassword;
-			account.Repositories = [];
+			account.Repositories = {};
 			db.collection("Users").insert(account, callback);
 		}
 		],
@@ -142,8 +142,61 @@ function isEmpty(obj) {
     return true;
 }
 
-function findAndModify(db, query, data, callback) {
-	db.collection("Users").findAndModify(query, null, {$addToSet: {"Repositories": data}}, callback);
+function findAndModify(db, query, repo_name, data, callback) {
+	var setModifier = { $push: {} };
+	setModifier.$push["Repositories." + repo_name] = data;
+	db.collection("Users").findAndModify(query, null, setModifier, callback);
+}
+
+function useGridFS(db, req, fileName, gridName, isArray, callback) {
+	if (isArray) {
+		var array = [];
+		for (var i = 0; i < req.files[fileName].length; i++) {
+			array[i] = req.files[fileName][i].path;
+		}
+		async.eachSeries(
+		    array, function (item, next) {
+		    	fs.readFile(item, function(err, data) {
+			        if (!err) {
+			          	var grid = new Grid(db, gridName);  
+				 		var buffer = new Buffer(data);
+					    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+					    	if (err) {
+					    		return next(err);
+					    	}
+						    findAndModify(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, next);
+				  		});
+			        }
+			    });
+		    }, function (err) {
+		    	callback(err);
+		    });
+	} else {
+		fs.readFile(req.files[fileName].path, function (err, data) {
+			var grid = new Grid(db, req.body.repo_name);  
+	 		var buffer = new Buffer(data);
+		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+		    	if (err) {
+		    		return callback(err);
+		    	} 
+			    findAndModify(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, callback);
+	  		});
+		});
+	}
+}
+
+function getRepositoryPictures(db, req, gridName, callback) {
+	getUser(db, {"Username": req.params.userid}, function (err, account) {
+		if (err) {
+			callback(err);
+		} else if (!account) {
+			callback("No account found with the requested username!");
+		} else {
+			for (var key in account.Repositories) {
+				
+			}
+		}
+	})
 }
 
 module.exports.insertIntoDB = insertIntoDB;
@@ -153,3 +206,4 @@ module.exports.getUser = getUser;
 module.exports.search = search;
 module.exports.updateUser = updateUser;
 module.exports.findAndModify = findAndModify;
+module.exports.useGridFS = useGridFS;
