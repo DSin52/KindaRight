@@ -34,9 +34,11 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
+  		<p id="test" val=<%= Username %>></p>
   	    <p id="userId"><%= Username %>: <%= First_Name %> <%=Last_Name %></p>
 		<img src=<%=Profile_Picture %> height="150" width="125">
 	    <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button>
+		<h1 id="myHeader"><%= Username %></h1>
 
 
 		<% if (Repositories.length) { %>
