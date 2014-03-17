@@ -99,7 +99,6 @@ app.post("/main", function(req, res, next) {
     	return next(err);
     }
     if (!user) { 
-    	console.log(info);
     	return res.redirect("/");
     }
     req.logIn(user, function(err) {
@@ -205,7 +204,6 @@ app.get("/users/:userid", function (req, res) {
 		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
 			var repositories = [];
 			for (var key in account.Repositories) {
-				console.log(key);
 				repositories.push(key);
 			}
 			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
@@ -310,7 +308,7 @@ app.get("/get/repository/:pictureid", function (req, res) {
 	var grid = new Grid(_db, 'Repositories');  
 		grid.get(new ObjectID(req.params.pictureid), function (err, data) {
 			if (err) {
-				res.send(500, {Error: "Error in finding picture"});
+				res.send(500, {Error: "Error in finding picture" + err});
 			} else {
 				res.writeHead(200, {"Content-Type": "image/png"});
 				res.write(data, "binary");

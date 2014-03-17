@@ -173,7 +173,7 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 		    });
 	} else {
 		fs.readFile(req.files[fileName].path, function (err, data) {
-			var grid = new Grid(db, req.body.repo_name);  
+			var grid = new Grid(db, gridName);  
 	 		var buffer = new Buffer(data);
 		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
 		    	if (err) {

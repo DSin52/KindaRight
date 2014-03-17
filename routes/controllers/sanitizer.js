@@ -1,6 +1,5 @@
 function sanitizeText(queryParam, callback) {
 	var queryArray = queryParam.split(" ");
-	console.log("Char is:" + queryParam.substring(7) + "poop");
 	if (!queryParam) {
 		callback(null);
 	} else if (queryParam.toLowerCase().substring(0, 6) == "email:") {
