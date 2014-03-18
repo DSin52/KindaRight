@@ -1,0 +1,42 @@
+#diamond {
+	z-index: 0;
+	margin: 0 auto;
+	background-color: #44036f;
+	width: 500px;
+	height: 500px;
+	overflow: hidden;
+	padding: 73px;
+
+	-webkit-transform: translateY(-55%) scale(2.3) rotate(45deg);
+}
+
+nav {
+	z-index: 1;
+}
+
+.text {
+	padding: 5px;
+}
+
+#site_text {
+	padding-top: 51%;
+	width: 100%;
+	height: 100%;
+	
+	-webkit-transform: rotate(-45deg);
+}
+
+#artist_text {
+	position: absolute;
+	text-align: right;
+	
+	right: 0px;
+	bottom: 0px;
+
+}
+
+#patron_text {
+	position: absolute;
+	left: 0%;
+	bottom: 0px;
+}
