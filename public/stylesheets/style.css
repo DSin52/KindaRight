@@ -1,10 +1,31 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: black;
+
+  overflow: hidden;
+
+  width: 100%;
 }
 
 a {
   color: #00B7FF;
+}
+
+logo {
+	font-family: 'Swanky and Moo Moo', cursive;
+	color: #fff;
+}
+
+p {
+	color: #FFF;
+	font-size: 24pt;
+	font-family: 'Josefin Slab', serif;
+}
+
+h1 {
+	color:  #FFF;
+	font-family: 'Linden Hill', serif;
+	font-size: 72pt;
 }
 
 #title {
