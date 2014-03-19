@@ -97,3 +97,14 @@ h3 {
 	padding: 10px;
 }
 
+.folder {
+	text-align: center;	
+	padding: 98px;
+	display: inline-block;
+	background: #F00 url("../images/folder.jpg");
+	color: #F00;
+	margin: 10px;
+	width: 200px;
+	height: 200px;
+}
+

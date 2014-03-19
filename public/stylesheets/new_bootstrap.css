@@ -5,6 +5,18 @@
 	color: #FFF;
 }
 
+.btn-info {
+	border: 0px;
+	background-color: #44036f;
+	color: #FFF;
+}
+
+.btn-info:hover {
+	border: 0px;
+	color: #44036f;
+	background: color: #FFF;
+}
+
 .btn-default {
 	border: 0px;
 	border: solid: 1px;

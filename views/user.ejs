@@ -48,7 +48,8 @@
 		<% if (Repositories.length) { %>
 		  <ul id="repos">
 		    <% Repositories.forEach(function(name){ %>
-		      <li><%= name %></li>
+				<div class="folder"><%= name %></div>
+		      	<!-- <li><%= name %></li> -->
 		    <% }) %>
 		  </ul>
 		<% } %>
