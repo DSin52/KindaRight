@@ -1,10 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   background-color: black;
-
-  overflow: hidden;
-
-  width: 100%;
 }
 
 a {
@@ -14,11 +10,12 @@ a {
 logo {
 	font-family: 'Swanky and Moo Moo', cursive;
 	color: #fff;
+	font-style: normal;
 }
 
 p {
 	color: #FFF;
-	font-size: 24pt;
+	font-size: 36pt;
 	font-family: 'Josefin Slab', serif;
 }
 
@@ -26,6 +23,12 @@ h1 {
 	color:  #FFF;
 	font-family: 'Linden Hill', serif;
 	font-size: 72pt;
+}
+
+h3 {
+	color: #FFF;
+	font-size: 50pt;
+	font-family: 'Josefin Slab', serif;
 }
 
 #title {
@@ -62,3 +65,30 @@ h1 {
 #repo {
 	background-color: gray;
 }
+
+.center-text {
+	text-align: center;
+}
+
+.light-accent {
+	color: #8F55B7;
+}
+
+.page {
+	
+	min-height: 97%;	
+	overflow: hidden;
+	
+	margin-bottom: 3%;
+}
+
+.column {
+	float: left;
+	
+	display: inline-block;
+	width: 50%;
+	height: 100%;
+
+	padding: 10px;
+}
+

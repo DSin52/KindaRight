@@ -8,14 +8,18 @@
 }
 
 .btn-success {
-	background-color: #888;
+	background-color: #8F55B7;
 	color: #FFF;	
 }
 
 .navbar {
 	border: none;
-
-
+	position: fixed;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	margin-bottom: 0px;
+	
 	box-shadow: 0 10px 10px 10px #333;
 	-webkit-box-shadow: 0 3px 10px 2px #000;
 }

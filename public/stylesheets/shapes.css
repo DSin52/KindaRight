@@ -1,13 +1,19 @@
-#diamond {
-	z-index: 0;
-	margin: 0 auto;
-	background-color: #44036f;
-	width: 500px;
-	height: 500px;
-	overflow: hidden;
-	padding: 73px;
+body {
+	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
+	height: 100%;
+	width: 100%;
+}
 
-	-webkit-transform: translateY(-55%) scale(2.3) rotate(45deg);
+#diamond {
+	margin: 0 auto;
+	z-index
+	margin: 0 auto;
+	width: 900px;
+	height: 900px;
+	background-color: #44036f;
+
+	-webkit-transform: translateY(-50%) rotate(45deg);
+
 }
 
 nav {
@@ -19,17 +25,20 @@ nav {
 }
 
 #site_text {
-	padding-top: 51%;
+	
 	width: 100%;
 	height: 100%;
-	
-	-webkit-transform: rotate(-45deg);
+
+	-webkit-transform: rotate(-45deg) translateY(54%);
+
 }
 
 #artist_text {
 	position: absolute;
 	text-align: right;
 	
+	width: 40%;
+
 	right: 0px;
 	bottom: 0px;
 
@@ -37,6 +46,8 @@ nav {
 
 #patron_text {
 	position: absolute;
+
+	width: 40%;
 	left: 0%;
 	bottom: 0px;
 }
