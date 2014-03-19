@@ -1,15 +1,31 @@
-.btn {
-	border: 0px;
-}
 
 .btn-primary {
+	border: 0px;
 	background-color: #44036f;
 	color: #FFF;
 }
 
+.btn-default {
+	border: 0px;
+	border: solid: 1px;
+}
+
+.btn-primary:hover {
+	border: 0px;
+	color: #44036f;
+	background-color: #FFF;
+}
+
 .btn-success {
+	border: 0px;
 	background-color: #8F55B7;
 	color: #FFF;	
+}
+
+.btn-success:hover {
+	border: 0px;
+	color: #8F55B7;
+	background-color: #FFF;	
 }
 
 .navbar {
@@ -19,6 +35,7 @@
 	top: 0px;
 	width: 100%;
 	margin-bottom: 0px;
+	border-radius: 0px;
 	
 	box-shadow: 0 10px 10px 10px #333;
 	-webkit-box-shadow: 0 3px 10px 2px #000;
