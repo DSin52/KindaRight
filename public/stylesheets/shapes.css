@@ -6,8 +6,8 @@ body {
 
 #diamond {
 	margin: 0 auto;
-	width: 900px;
-	height: 900px;
+	/*width: 45%;*/
+	height: 125%;
 	background-color: #44036f;
 
 	-webkit-transform: translateY(-50%) rotate(45deg);

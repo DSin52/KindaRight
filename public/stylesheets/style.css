@@ -27,8 +27,11 @@ h1 {
 
 h2 {
 	color: #0FF;
-	font-size: 24pt;
+	font-size: 28pt;
 	font-family: 'Josefin Slab', serif;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
 }
 
 h3 {

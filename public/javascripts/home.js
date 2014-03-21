@@ -1,5 +1,7 @@
 $(document).ready(function(){
 	
+	$('#diamond').css('width', $('#diamond').css('height'));
+
 	function validate(acct, callback) {
 		$.post("/validation", acct, callback);
 	};
