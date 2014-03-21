@@ -19,8 +19,12 @@ p {
 	font-family: 'Josefin Slab', serif;
 }
 
+.justify {
+	text-align: justify;
+}
+
 h1 {
-	color:  #FFF;
+	color:  #0FF;
 	font-family: 'Linden Hill', serif;
 	font-size: 72pt;
 }
@@ -81,11 +85,11 @@ h3 {
 }
 
 .light-accent {
-	color: #C19ADB;
+	color: #C19ADB;7
 }
 
 .page {
-	padding: 10px;
+	/*padding: 10px;*/	
 	min-height: 97%;	
 	overflow: hidden;
 	background: #111;
@@ -94,8 +98,14 @@ h3 {
 
 .head {
 
-	padding: 50px;
+	padding-top: 500px;
+
 	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
+}
+
+.dark-head {
+	padding-top: 50px;
+	background: #111;
 }
 
 .column {

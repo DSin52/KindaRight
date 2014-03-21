@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/new_bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/shapes.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/user.css">
     <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Josefin+Slab|Linden+Hill' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
@@ -37,12 +38,12 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
-  	<div class="page head">
-  		<p id="test" val=<%= Username %>></p>
-  	    <p id="userId"><%= Username %>: <%= First_Name %> <%=Last_Name %></p>
+  	<div class="page dark-head">
+  		
+  	    <p id="userId"><%= First_Name %> <%=Last_Name %></p>
 		<img src=<%=Profile_Picture %> height="150" width="125">
 	    <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button>
-		<h1 id="myHeader"><%= Username %></h1>
+		<h1>Projects</h1>
 
 
 		<% if (Repositories.length) { %>
