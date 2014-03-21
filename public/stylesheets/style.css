@@ -15,7 +15,7 @@ logo {
 
 p {
 	color: #FFF;
-	font-size: 36pt;
+	font-size: 3rem;
 	font-family: 'Josefin Slab', serif;
 }
 
@@ -89,12 +89,16 @@ h3 {
 
 .column {
 	float: left;
-	
+	text-align: justify;
 	display: inline-block;
-	width: 50%;
+	width: 40%;
 	height: 100%;
 
 	padding: 10px;
+}
+
+.right {
+	float: right;
 }
 
 .folder {
