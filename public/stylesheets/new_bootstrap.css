@@ -1,8 +1,20 @@
+.btn {
+	-webkit-transition: color 1s ease-out;
+	-webkit-transition: background-color 1s ease-out;
+	transition: color 1s ease-out;
+	transition: background-color 1s ease-out;
+}
+
 
 .btn-primary {
 	border: 0px;
 	background-color: #44036f;
 	color: #FFF;
+}
+.btn-primary:hover {
+	border: 0px;
+	color: #44036f;
+	background-color: #FFF;
 }
 
 .btn-info {
@@ -14,7 +26,7 @@
 .btn-info:hover {
 	border: 0px;
 	color: #44036f;
-	background: color: #FFF;
+	background-color: #FFF;
 }
 
 .btn-default {
@@ -22,11 +34,7 @@
 	border: solid: 1px;
 }
 
-.btn-primary:hover {
-	border: 0px;
-	color: #44036f;
-	background-color: #FFF;
-}
+
 
 .btn-success {
 	border: 0px;

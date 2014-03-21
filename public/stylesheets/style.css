@@ -25,6 +25,12 @@ h1 {
 	font-size: 72pt;
 }
 
+h2 {
+	color: #0FF;
+	font-size: 24pt;
+	font-family: 'Josefin Slab', serif;
+}
+
 h3 {
 	color: #FFF;
 	font-size: 50pt;
@@ -72,19 +78,21 @@ h3 {
 }
 
 .light-accent {
-	color: #8F55B7;
+	color: #C19ADB;
 }
 
 .page {
-	
+	padding: 10px;
 	min-height: 97%;	
 	overflow: hidden;
+	background: #111;
 	
-	margin-bottom: 3%;
 }
 
 .head {
-	padding: 5%;
+
+	padding: 50px;
+	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
 }
 
 .column {
@@ -93,7 +101,7 @@ h3 {
 	display: inline-block;
 	width: 40%;
 	height: 100%;
-
+	
 	padding: 10px;
 }
 
