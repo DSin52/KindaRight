@@ -144,9 +144,11 @@ app.post("/create", function (req, res) {
 		"Last_Name": req.body.Last_Name,
 		"Email": req.body.Email,
 		"Username": req.body.Username,
-		"Password": req.body.Password
+		"Password": req.body.Password,
+		"Discipline": req.body.discipline
 	};
 
+	console.log(User.Discipline);
 	fs.readFile(req.files.picture.path, function (err, data) {
 		if (err) {
 			throw err;
@@ -257,14 +259,14 @@ app.get("/repository/create/:userid", function (req, res) {
 });
 
 app.post("/repository", function (req, res) {
-
+	console.log(req.body);
 	if (req.cookies.loggedIn) {
 		if (req.files) {
 				if (req.files.repo_pics && req.files.repo_pics.length)
 				{
 					db.useGridFS(_db, req, "repo_pics", "Repositories", true, function (err, data) {
 						if (err) {
-							res.send(500);
+							res.send(500, err);
 						} else {
 							res.redirect("/");
 						}
@@ -272,7 +274,7 @@ app.post("/repository", function (req, res) {
 				} else {
 					db.useGridFS(_db, req, "repo_pics", "Repositories", false, function (err, data) {
 						if (err) {
-							res.send(500);
+							res.send(500, err);
 						} else {
 							res.redirect("/");
 						}
@@ -293,10 +295,17 @@ app.get("/repository/:userid/:repository", function (req, res) {
 			res.send(404);
 		} else {
 			var images = [];
-			for (var i = 0; i < account.Repositories[req.params.repository].length; i++) {
-				images[i] = "http://localhost:3000/get/repository/" + account.Repositories[req.params.repository][i];
+			var tags = [];
+			for (var i = 0; i < account.Repositories[req.params.repository].Pictures.length; i++) {
+				images[i] = "http://localhost:3000/get/repository/" + account.Repositories[req.params.repository].Pictures[i];
 			}
-			router.route(req, res, "view_repository", {"Repo": images});
+			for (var i = 0; i < account.Repositories[req.params.repository].tags.length; i++) {
+				for (var j = 0; j < account.Repositories[req.params.repository].tags[j].length; j++) {
+					tags.push(account.Repositories[req.params.repository].tags[i][j]);
+				}
+			}
+			console.log(tags);
+			router.route(req, res, "view_repository", {"Repo": images, "Name": req.params.repository, "Tags": tags});
 		}
 	});
 	} else {

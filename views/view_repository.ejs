@@ -34,6 +34,13 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
+  		<h1>
+  			<%=Name%>
+  		</h1>
+  		<h2>
+  			Tags: <%=Tags%>
+  		</h2>
+        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addPicturesModal" id="launchPictureModal">Add Pictures</button>
 
 		<% if (Repo.length) { %>
 		  <ul id="repos">
@@ -43,6 +50,36 @@
 		  </ul>
 		<% } %>
 
+
+	<!-- Forgot Modal -->
+	  <div class="modal fade" id="addPicturesModal">
+	    <div class="modal-dialog">
+	      <div class="modal-content">
+	        <div class="modal-header">
+	          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	          <h4 class="modal-title">Add Pictures</h4>
+	        </div>
+	        <div class="modal-body" id="modal-add">
+	          <p>Please choose all the pictures you would like to add to this gallery</p>
+		    <form class="form-horizontal" id="repo_add" method="POST" action="/repository" enctype="multipart/form-data">
+		    	<div class="form-group">
+	                <input type="text" class="form-control" name="repo_name" id="repo_name"value=<%=Name%> readonly="readonly">
+	            </div>
+	            <div class="form-group">
+	                <input type="text" class="form-control" placeholder="Enter each tag name seperated by a comma" name="tags" id="tags">
+	            </div>
+	            <div class="form-group">
+	                <input type="file" class="form-control" name="repo_pics" id="addPictures" multiple>
+	            </div>
+	            <button type="submit" class="btn btn-primary" id="addPictures">Add Pictures</button>
+	          </form>
+	        <div class="modal-footer">
+	          <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	  <!-- End Forgot Modal -->
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>

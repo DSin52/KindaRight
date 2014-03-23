@@ -17,6 +17,7 @@ $(document).ready(function(){
 		$("#createPassword").val("");
 		$("#verifyPassword").val("");
 		$("#createPicture").val("");
+		$("#discipline").val("");
 	}
 
 	$("#loginButton").click(function(event) {
@@ -51,8 +52,9 @@ $(document).ready(function(){
 		var username = $("#createUsername").val();
 		var pass = $("#createPassword").val();
 		var verifyPass = $("#verifyPassword").val();
+		var discipline = $("#discipline").val();
 
-		if (!email || !verifyEmail || !pass || !verifyPass || !firstName || !lastName || !username) {
+		if (!email || !verifyEmail || !pass || !verifyPass || !firstName || !lastName || !username || !discipline) {
 			alert("Please complete entering in all the information");
 		} else if (email !== verifyEmail) {
 			alert("The two emails do not match up!");

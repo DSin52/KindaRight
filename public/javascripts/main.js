@@ -27,13 +27,15 @@ $(document).ready(function(event) {
               .append( "<a>" + "User not found!" + "</a>" )
               .appendTo( ul );
             }
-      };
-
-    
+      };    
 
   function showAccountButton() {
     if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {
       $("#accountButton").text("Account Settings");
+      $("#repositoryButton").text("Create Repository");
+      $("#repositoryButton").click(function (event) {
+          window.location.href="/repository/create/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
+      });
       $("#accountButton").click(function (event) {
           event.preventDefault();
           window.location.href="/settings/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
@@ -44,20 +46,28 @@ $(document).ready(function(event) {
           event.preventDefault();
           window.location.href = "/users/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
       });
-    }
-  }
-
-  function showRepositoryButton() {
-    if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {
-      $("#repositoryButton").text("Create Repository");
-      $("#repositoryButton").click(function (event) {
-          window.location.href="/repository/create/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
-      });
-    } else {
       $("#repositoryButton").toggle(false);
     }
   }
 
+  // function showRepositoryButton() {
+  //   if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {
+  //     $("#repositoryButton").text("Create Repository");
+  //     $("#repositoryButton").click(function (event) {
+  //         window.location.href="/repository/create/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
+  //     });
+  //   } else {
+  //     $("#repositoryButton").toggle(false);
+  //   }
+  // }
+
+  function limitAddPictures() {
+    var username = new String(JSON.parse($.cookie().loggedIn.substring(2)).Username);
+    if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(12, 12 + username.length)) {
+     } else {
+        $("#launchPictureModal").toggle(false);
+     }
+  }
   function repoLaunch() {
       $('#repos li').click(function() {
         // window.location.href = "/repository/" + JSON.parse($.cookie().loggedIn.substring(2)).Username + "/" + $(this).text();
@@ -65,8 +75,15 @@ $(document).ready(function(event) {
     });
   }
 
+  function addPictures() {
+    $("#addPictures").click(function(event) {
+      event.preventDefault();
+    })
+  }
+
 
   showAccountButton();
-  showRepositoryButton();
+  // showRepositoryButton();
   repoLaunch();
+  limitAddPictures()
 });

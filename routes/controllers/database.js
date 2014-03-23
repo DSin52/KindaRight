@@ -87,6 +87,8 @@ function search(db, query, callback) {
 	db.collection("Users").find(query, projection).toArray(callback);
 }
 
+/*  Not implemented yet!!!
+-----------------------------------------------------------------
 function updateUser(db, req, callback) {
 	parseBody(req, function (err, updatedObject) {
 		if(!isEmpty(updatedObject)) {
@@ -99,6 +101,8 @@ function updateUser(db, req, callback) {
 		}
 	});
 }
+-----------------------------------------------------------------
+*/
 
 function parseBody(req, callback) {
 	var updatedObject = {};
@@ -115,22 +119,6 @@ function parseBody(req, callback) {
 				});
 			});
 	}
-	// if (req.files.update_profile.size > 0) {
-	// 	fs.readFile(req.files.update_profile.path, function (err, data) {
-	// 		if (err) {
-	// 			throw err;
-	// 		} else {
-	// 	 		var grid = new Grid(_db, 'Users');  
-	// 	 		var buffer = new Buffer(data);
-	// 		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
-	// 			    if(err) {
-	// 			      return callback("Error in updated profile picture!");
-	// 			    }
-	// 			    updatedObject.Profile_Picture = fileInfo._id;
-	// 	  		});
-	// 		}
-	// 	});
-	// }
 	return callback(null, updatedObject);
 }
 
@@ -142,14 +130,17 @@ function isEmpty(obj) {
     return true;
 }
 
-function findAndModify(db, query, repo_name, data, callback) {
+function findAndModifyRepo(db, query, repo_name, data, propertyName, callback) {
 	var setModifier = { $push: {} };
-	setModifier.$push["Repositories." + repo_name] = data;
+	setModifier.$push["Repositories." + repo_name + propertyName] = data;
 	db.collection("Users").findAndModify(query, null, setModifier, callback);
 }
 
 function useGridFS(db, req, fileName, gridName, isArray, callback) {
-	if (isArray) {
+	var tags = req.body.tags.split(",");
+	
+	findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, tags, ".tags", function (err) {
+		if (isArray) {
 		var array = [];
 		for (var i = 0; i < req.files[fileName].length; i++) {
 			array[i] = req.files[fileName][i].path;
@@ -164,10 +155,10 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 					    	if (err) {
 					    		return next(err);
 					    	}
-						    findAndModify(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, next);
-				  		});
-			        }
-			    });
+						    findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", next);
+			        	});
+			    }
+			});
 		    }, function (err) {
 		    	callback(err);
 		    });
@@ -179,31 +170,20 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 		    	if (err) {
 		    		return callback(err);
 		    	} 
-			    findAndModify(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, callback);
+		    	var tags = req.body.tags.split(",");
+				findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", callback);
 	  		});
 		});
 	}
+	});
 }
 
-function getRepositoryPictures(db, req, gridName, callback) {
-	getUser(db, {"Username": req.params.userid}, function (err, account) {
-		if (err) {
-			callback(err);
-		} else if (!account) {
-			callback("No account found with the requested username!");
-		} else {
-			for (var key in account.Repositories) {
-				
-			}
-		}
-	})
-}
 
 module.exports.insertIntoDB = insertIntoDB;
 module.exports.checkExists = checkExists;
 module.exports.find = find;
 module.exports.getUser = getUser;
 module.exports.search = search;
-module.exports.updateUser = updateUser;
-module.exports.findAndModify = findAndModify;
+// module.exports.updateUser = updateUser;
+module.exports.findAndModifyRepo = findAndModifyRepo;
 module.exports.useGridFS = useGridFS;
