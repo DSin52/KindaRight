@@ -7,6 +7,43 @@ a {
   color: #00B7FF;
 }
 
+logo {
+	font-family: 'Swanky and Moo Moo', cursive;
+	color: #fff;
+	font-style: normal;
+}
+
+p {
+	color: #FFF;
+	font-size: 3rem;
+	font-family: 'Josefin Slab', serif;
+}
+
+.justify {
+	text-align: justify;
+}
+
+h1 {
+	color:  #0FF;
+	font-family: 'Linden Hill', serif;
+	font-size: 72pt;
+}
+
+h2 {
+	color: #0FF;
+	font-size: 28pt;
+	font-family: 'Josefin Slab', serif;
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+h3 {
+	color: #FFF;
+	font-size: 50pt;
+	font-family: 'Josefin Slab', serif;
+}
+
 #title {
 	font-size: 35px;
 	font-style: italic;
@@ -34,6 +71,7 @@ a {
 	color: white;
 }
 
+
 #settings_form {
 	background-color: white;
 }
@@ -41,3 +79,57 @@ a {
 #repo {
 	background-color: gray;
 }
+
+.center-text {
+	text-align: center;
+}
+
+.light-accent {
+	color: #C19ADB;7
+}
+
+.page {
+	/*padding: 10px;*/	
+	min-height: 97%;	
+	overflow: hidden;
+	background: #111;
+	
+}
+
+.head {
+
+	padding-top: 50px;
+
+	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
+}
+
+.dark-head {
+	padding-top: 50px;
+	background: #111;
+}
+
+.column {
+	float: left;
+	text-align: justify;
+	display: inline-block;
+	width: 40%;
+	height: 100%;
+	
+	padding: 10px;
+}
+
+.right {
+	float: right;
+}
+
+.folder {
+	text-align: center;	
+	padding: 98px;
+	display: inline-block;
+	background: #F00 url("../images/folder.jpg");
+	color: #F00;
+	margin: 10px;
+	width: 200px;
+	height: 200px;
+}
+

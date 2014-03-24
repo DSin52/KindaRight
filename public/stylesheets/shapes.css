@@ -1,0 +1,55 @@
+body {
+	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
+	height: 100%;
+	width: 100%;
+}
+
+#diamond {
+	margin: 0 auto;
+	/*width: 45%;*/
+	height: 130%;
+	background-color: #44036f;
+
+	-webkit-transform: translateY(-55%) rotate(45deg);
+	transform: translateY(-50%) rotate(45deg);
+
+	-webkit-box-shadow: 0px 3px 10px 2px #000;
+	box-shadow: 0px 3px 10px 2px #000;
+
+}
+
+nav {
+	z-index: 1;
+}
+
+.text {
+	padding: 5px;
+}
+
+#site_text {
+	
+	width: 100%;
+	height: 100%;
+
+	-webkit-transform: rotate(-45deg) translateY(54%);
+
+}
+
+#artist_text {
+	position: absolute;
+	text-align: right;
+	
+	width: 40%;
+
+	right: 0px;
+	bottom: 0px;
+
+}
+
+#patron_text {
+	position: absolute;
+
+	width: 40%;
+	left: 0%;
+	bottom: 0px;
+}
