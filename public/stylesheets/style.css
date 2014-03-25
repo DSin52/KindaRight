@@ -1,6 +1,6 @@
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: black;
+  background-color: #111;
 }
 
 a {
@@ -89,7 +89,7 @@ h3 {
 }
 
 .page {
-	/*padding: 10px;*/	
+	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
 	min-height: 97%;	
 	overflow: hidden;
 	background: #111;
@@ -126,10 +126,23 @@ h3 {
 	text-align: center;	
 	padding: 98px;
 	display: inline-block;
-	background: #F00 url("../images/folder.jpg");
+	background: url("../images/folder-black.png") no-repeat center top;
+	background-size: 90% 90%;
 	color: #F00;
 	margin: 10px;
 	width: 200px;
 	height: 200px;
 }
 
+.inline {
+	display: inline-block;
+}
+
+#repo {
+	width: 100%;
+	
+}
+
+#repo_form {
+	margin-top: 20px;
+}
