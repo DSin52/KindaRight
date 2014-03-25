@@ -300,11 +300,10 @@ app.get("/repository/:userid/:repository", function (req, res) {
 				images[i] = "http://localhost:3000/get/repository/" + account.Repositories[req.params.repository].Pictures[i];
 			}
 			for (var i = 0; i < account.Repositories[req.params.repository].tags.length; i++) {
-				for (var j = 0; j < account.Repositories[req.params.repository].tags[j].length; j++) {
+				for (var j = 0; j < account.Repositories[req.params.repository].tags[i].length; j++) {
 					tags.push(account.Repositories[req.params.repository].tags[i][j]);
 				}
 			}
-			console.log(tags);
 			router.route(req, res, "view_repository", {"Repo": images, "Name": req.params.repository, "Tags": tags});
 		}
 	});

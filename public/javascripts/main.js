@@ -70,8 +70,8 @@ $(document).ready(function(event) {
   }
   function repoLaunch() {
       $('#repos li').click(function() {
-        // window.location.href = "/repository/" + JSON.parse($.cookie().loggedIn.substring(2)).Username + "/" + $(this).text();
-        window.location.href = "/repository/" + document.getElementById("myHeader").innerHTML + "/" + $(this).text();
+        window.location.href = "/repository/" + JSON.parse($.cookie().loggedIn.substring(2)).Username + "/" + $(this).text();
+        // window.location.href = "/repository/" + document.getElementById("myHeader").innerHTML + "/" + $(this).text();
     });
   }
 
