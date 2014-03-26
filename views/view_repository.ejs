@@ -47,18 +47,27 @@
   		<h2>
   			Tags: <%=Tags%>
   		</h2>
-				<% if (Repo.length) { %>
-		  <ul id="repos">
+		<% if (Repo.length) { %>
+		  <div id="repos" class="visible-lg visible-md">
 		    <% Repo.forEach(function(name){ %>
-		      <div class=" inline relative">
-		      	<div class="pictures-overlay"></div>
-
-			    <div class="pictures">
-			    	<li><img src=<%=name%> height="300"></li>
+			    <div class="picture inline relative">
+			      	<div class="pictures-overlay"></div>
+				    <div class="inline">
+				    	<img src=<%=name%> width="100%">				    	
+				    </div>
 			    </div>
-		      </div>
 		    <% }) %>
-		  </ul>
+		  </div>
+		  <div id="repos" class="hidden-lg hidden-md">
+		    <% Repo.forEach(function(name){ %>
+			    <div class="picture-sm inline relative">
+			      	<div class="pictures-overlay"></div>
+				    <div class="inline">
+				    	<img src=<%=name%> width="100%">				    	
+				    </div>
+			    </div>
+		    <% }) %>
+		  </div>
 		<% } %>
 	</div>
 

@@ -99,14 +99,17 @@ li {
 .page {
 	position: relative;
 	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
-	min-height: 97%;	
-	overflow: hidden;
-	background: #111;
 	
+	min-height: 93%;	
+	max-height: 100%;
+	overflow: hidden;
+	
+	background: #111;
+	margin: 10px;
 }
 
 .head {
-
+	margin: 0 auto;
 	padding-top: 50px;
 
 	background: #fff  url('../images/background.jpg') no-repeat fixed center top;
@@ -149,13 +152,12 @@ li {
 	display: inline-block;
 }
 
-.pictures {
-	z-index: 0;
-	/*border: 10px solid;*/
-	
-	/*border-color: #000;
-	border-radius: 10px;*/
-	
+.picture {
+	width: 24%;
+}
+
+.picture-sm {
+	width: 100%;
 }
 
 .pictures-overlay:hover {
