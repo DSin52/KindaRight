@@ -38,7 +38,7 @@
 	  </nav>
   	<!-- End NavBar Object -->
   		
-        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addPicturesModal" id="launchPictureModal">Add Pictures</button>
+        
 
 	<div class="page dark-head">
 		<h1>
@@ -47,10 +47,16 @@
   		<h2>
   			Tags: <%=Tags%>
   		</h2>
+		<div style="padding-left: 10px">
+  			<button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addPicturesModal" id="launchPictureModal">Add Pictures</button>
+  		</div>
+
 		<% if (Repo.length) { %>
+		<!-- SCREEN FOR LARGE RESOLUTIONS -->
 		  <div id="repos" class="visible-lg visible-md">
 		    <% Repo.forEach(function(name){ %>
 			    <div class="picture inline relative">
+			    	<!-- LAYS ONTOP OF PHOTO TO GIVE THE BLUR -->
 			      	<div class="pictures-overlay"></div>
 				    <div class="inline">
 				    	<img src=<%=name%> width="100%">				    	
@@ -58,6 +64,7 @@
 			    </div>
 		    <% }) %>
 		  </div>
+		  <!-- RESPONSIVE SCREEN FOR SMALL RESOLUTIONS -->
 		  <div id="repos" class="hidden-lg hidden-md">
 		    <% Repo.forEach(function(name){ %>
 			    <div class="picture-sm inline relative">
