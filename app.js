@@ -208,9 +208,10 @@ app.get("/users/:userid", function (req, res) {
 			for (var key in account.Repositories) {
 				repositories.push(key);
 			}
+			
 			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
 			router.route(req, res, "user", 
-				{
+				{					
 					"Profile_Picture": imgPath, 
 					"Username": account.Username, 
 					"First_Name": account.First_Name, 
