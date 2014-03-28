@@ -34,7 +34,10 @@
 	border: solid: 1px;
 }
 
-
+.col-md-4 {
+	padding-left: 2.5%;
+	padding-right: 2.5%;
+}
 
 .btn-success {
 	border: 0px;
