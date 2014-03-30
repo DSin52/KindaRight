@@ -21,6 +21,8 @@ function route(req, res, webpage, options, callback)
 		res.render("settings", options);
 	} else if (webpage === "view_repository") {
 		res.render("view_repository", options);
+	} else if (webpage === "repo_messages") {
+		res.render("repo_messages", options);
 	} else {
 		res.render("not_found");
 	}

@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/new_bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/shapes.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/user.css">
     <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Josefin+Sans|Linden+Hill' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
@@ -38,30 +37,37 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
-  	<div class="page dark-head">
-  		
-  	    <p id="userId"><%= First_Name %> <%=Last_Name %></p>
-  	    <p id="discipline">Discipline: <%= Discipline %></p>
-		<img src=<%=Profile_Picture %> height="150" width="125">
-	    <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button>
-		<h1>Projects</h1>
+  		<img id="pic_test" src=<%=Image%> height="300px" >
+  		<div class="container">
+  			<div class="messages">
+
+				<% if (Messages.length) { %>
+				<!-- SCREEN FOR LARGE RESOLUTIONS -->
+				  <div id="_repos" class="visible-lg visible-md">
+				    <% for (var i = 0; i < Messages.length; i++){ %>
+				    	<p><%=Messages[i].Username%> said: <%=Messages[i].Message%></p>
+				    <% } %>
+				  </div>
+				<% } %>
 
 
-		<% if (Repositories.length) { %>
-		  <ul id="repos">
-		    <% Repositories.forEach(function(name){ %>
-		      	<li class="inline"><%= name %></li>
-		    <% }) %>
-		  </ul>
-		<% } %>
-	</div>
+  			</div>
+  		</div>
+  		 <div class="container">
+	      <div id="chatPanel" class="ui-widget-content">
+	          <div id="messages">
+	      </div>
+          <textarea class="form-control" id="chat_message" placeholder="Enter message here"></textarea>
+          <button type="submit" class="btn btn-success" id="message_submit">Add Comment</button>
 
+      </div>
+    </div>
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-  <script src="../ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../js/jquery.cookie.js"></script>
-  <script type="text/javascript" src="/javascripts/main.js"></script>
+  <script src="../../../ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../../../js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="../../../javascripts/main.js"></script> 
   <!-- End Script References -->
   </body>
 </html>

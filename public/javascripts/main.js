@@ -27,7 +27,19 @@ $(document).ready(function(event) {
               .append( "<a>" + "User not found!" + "</a>" )
               .appendTo( ul );
             }
-      };    
+      };  
+
+  $("#message_submit").click(function (event) {
+      var pathToSubmitTo = window.location.pathname.substring(16, 40);
+      var message = $("#chat_message").val();
+      $.post("/" + pathToSubmitTo + "/messages", {"id": pathToSubmitTo, 
+        "Username": JSON.parse($.cookie().loggedIn.substring(2)).Username, "Message": message}, function (data) {
+          location.reload();
+          // $.get("/" + pathToSubmitTo + "/messages", function (data) {
+          //     // $("#messages").append("<p>" + data.Messages[data.Messages.length - 1].Username + " said: " + data.Messages[data.Messages.length - 1].Message+ "</p>");
+          // });
+      });
+  });
 
   function showAccountButton() {
     if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {

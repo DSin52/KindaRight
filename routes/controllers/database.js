@@ -178,6 +178,50 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 	});
 }
 
+function addMessage(db, req, callback) {
+	db.collection("Messages").findOne({
+		"id": req.body.id
+	}, function (err, image) {
+		if (!image) {
+			var messages = [];
+			messages[0] = {
+				"Username": req.body.Username,
+				"Message": req.body.Message
+			};
+			var doc = {
+				"id": req.body.id,
+				"Messages": messages
+			};
+			db.collection("Messages").insert(doc, function (err, data) {
+				callback(err, data);
+			});
+		} else {
+			db.collection("Messages").update({"id": req.body.id}, {$push: {"Messages": {
+				"Username": req.body.Username,
+				"Message": req.body.Message
+			}}}, function (err, data) {
+				callback(err, data);
+			});
+		}
+	});
+}
+
+function getMessages(db, req, initial, callback) {
+	var idToFind;
+	if (!initial) {
+		idToFind = req.path.substring(1, 25);
+	} else {
+		idToFind = req.path.substring(16, 40);
+	}
+	db.collection("Messages").findOne({
+		"id": idToFind
+	}, function (err, image) {
+		if (!image) {
+			return callback("Image not found!");
+		}
+		callback(null, image.Messages);
+	});
+}
 
 module.exports.insertIntoDB = insertIntoDB;
 module.exports.checkExists = checkExists;
@@ -187,3 +231,5 @@ module.exports.search = search;
 // module.exports.updateUser = updateUser;
 module.exports.findAndModifyRepo = findAndModifyRepo;
 module.exports.useGridFS = useGridFS;
+module.exports.addMessage = addMessage;
+module.exports.getMessages = getMessages;

@@ -46,7 +46,8 @@
   		</h1>
   			
 		<div class="inline">
-  			<button type="submit" class="btn btn-success" data-toggle="modal" data-target="#addPicturesModal" id="launchPictureModal">Add Button</button>
+  			<button type="submit" class="btn btn-success" data-toggle="modal" 
+  			data-target="#addPicturesModal" id="launchPictureModal">Add Button</button>
   		</div>
   		<div class="tags inline">
 	    	<p class="fine-print">
@@ -56,24 +57,24 @@
 
 		<% if (Repo.length) { %>
 		<!-- SCREEN FOR LARGE RESOLUTIONS -->
-		  <div id="repos" class="visible-lg visible-md">
+		  <div id="_repos" class="visible-lg visible-md">
 		    <% Repo.forEach(function(name){ %>
-			    <div class="picture inline relative">
-			    	<!-- LAYS ONTOP OF PHOTO TO GIVE THE BLUR -->
+		    	<a href=<%=name + "/view"%>><img id="pic_test" src=<%=name%> height="300px" ></a>
+			   <!--  <div class="picture inline relative">
 			      	<div class="pictures-overlay"></div>
 				    <div class="inline">
-				    	<img src=<%=name%> height="300px">				    	
+		    			<a href=<%=name + "/test"%> id="imgMessages"><img id="pic_test" src=<%=name%> height="300px" ></a>
 				    </div>
-			    </div>
+			    </div> -->
 		    <% }) %>
 		  </div>
 		  <!-- RESPONSIVE SCREEN FOR SMALL RESOLUTIONS -->
-		  <div id="repos" class="hidden-lg hidden-md">
+		  <div id="_repos" class="hidden-lg hidden-md">
 		    <% Repo.forEach(function(name){ %>
 			    <div class="picture-sm inline relative">
 			      	<div class="pictures-overlay"></div>
 				    <div class="inline">
-				    	<img src=<%=name%> height="150px">				    	
+							<img id="pic_test" src=<%=name%> height="150px">		
 				    </div>
 			    </div>
 		    <% }) %>

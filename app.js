@@ -83,7 +83,10 @@ if ("development" == app.get("env")) {
 
 app.get("/", function (req, res) {
 	if (req.cookies.loggedIn) {
-		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, "Email": req.cookies.loggedIn.Email, "First_Name": req.cookies.loggedIn.First_Name, "Last_Name": req.cookies.loggedIn.Last_Name});
+		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, 
+			"Email": req.cookies.loggedIn.Email, 
+			"First_Name": req.cookies.loggedIn.First_Name, 
+			"Last_Name": req.cookies.loggedIn.Last_Name});
 	} else {
 		router.route(req, res, "home");
 	}
@@ -106,7 +109,8 @@ app.post("/main", function(req, res, next) {
       	return next(err); 
       }
       var minute = 500000;
-      res.cookie("loggedIn", {"Username": user.Username, "Email": user.Email, "First_Name": user.First_Name, "Last_Name": user.Last_Name}, {"maxAge": minute});
+      res.cookie("loggedIn", {"Username": user.Username, "Email": user.Email, 
+      	"First_Name": user.First_Name, "Last_Name": user.Last_Name}, {"maxAge": minute});
       return router.route(req, res, "main", 
       	{
       		"Email": user.Email, 
@@ -120,7 +124,10 @@ app.post("/main", function(req, res, next) {
 
 app.get("/main", function (req, res) {
 	if (req.cookies.loggedIn) {
-		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, "Email": req.cookies.loggedIn.Email, "First_Name": req.cookies.loggedIn.First_Name, "Last_Name": req.cookies.loggedIn.Last_Name});
+		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, 
+			"Email": req.cookies.loggedIn.Email, 
+			"First_Name": req.cookies.loggedIn.First_Name, 
+			"Last_Name": req.cookies.loggedIn.Last_Name});
 	} else {
 		return res.redirect("/");
 	}
@@ -155,11 +162,12 @@ app.post("/create", function (req, res) {
 		} else {
 	 		var grid = new Grid(_db, 'Profile_Pictures');  
 	 		var buffer = new Buffer(data);
-		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+		    grid.put(buffer, {metadata:{category:'text'}, 
+		    	content_type: 'image/jpeg'}, function(err, fileInfo) {
 			    User.Profile_Picture = fileInfo._id;
 			    db.insertIntoDB(_db, User, function(err) {
 					if (err) {
-						res.send(res.statusCode);
+						res.send(res.statusCode, {"Error": err});
 						console.log(err);
 					}
 					router.route(req, res, "home");
@@ -204,7 +212,6 @@ app.get("/search", function (req, res) {
 app.get("/users/:userid", function (req, res) {
 	if (req.cookies.loggedIn) {
 		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
-			console.log("Account is: " + JSON.stringify(account));
 			var repositories = [];
 			for (var key in account.Repositories) {
 				repositories.push(key);
@@ -217,7 +224,8 @@ app.get("/users/:userid", function (req, res) {
 					"Username": account.Username, 
 					"First_Name": account.First_Name, 
 					"Last_Name": account.Last_Name,
-					"Repositories": repositories
+					"Repositories": repositories,
+					"Discipline": account.Discipline
 				}
 			);
 		});
@@ -249,7 +257,9 @@ app.get("/settings/:userid", function (req, res) {
 	if (req.cookies.loggedIn) {
 		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
 			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
-			router.route(req, res, "settings", {"Profile_Picture": imgPath, "Username": account.Username, "First_Name": account.First_Name, "Last_Name": account.Last_Name});
+			router.route(req, res, "settings", {"Profile_Picture": imgPath, 
+				"Username": account.Username, "First_Name": account.First_Name, 
+				"Last_Name": account.Last_Name});
 		});	
 	} else {
 		res.redirect("/");
@@ -261,7 +271,6 @@ app.get("/repository/create/:userid", function (req, res) {
 });
 
 app.post("/repository", function (req, res) {
-	console.log(req.body);
 	if (req.cookies.loggedIn) {
 		if (req.files) {
 				if (req.files.repo_pics && req.files.repo_pics.length)
@@ -292,9 +301,9 @@ app.get("/repository/:userid/:repository", function (req, res) {
 	if (req.cookies.loggedIn) {
 		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
 		if (err) {
-			res.send(500);
+			res.send(500, {"Error": err});
 		} else if (!account) {
-			res.send(404);
+			res.send(404, {"Error": "User not found!"});
 		} else {
 			var images = [];
 			var tags = [];
@@ -325,6 +334,33 @@ app.get("/get/repository/:pictureid", function (req, res) {
 				res.end();
 			}
 		});
+});
+
+app.post("/:repo_id/messages", function (req, res) {
+	db.addMessage(_db, req, function (err, data) {
+		if (err) {
+			return console.log(err);
+		}
+		res.send(200);
+	})
+});
+
+app.get("/:repo_id/messages", function (req, res) {
+	db.getMessages(_db, req, false, function (err, data) {
+		if (err) {
+			return console.log(err);
+		} 
+		console.log(data);
+		res.send(200, {"Messages": data});
+	});
+});
+
+app.get("/get/repository/:pictureid/view", function (req, res) {
+	var imageToCritique = req.path.substring(0, req.path.length - 5);
+	db.getMessages(_db, req, true, function (err, data) {
+		console.log(data);
+		router.route(req, res, "repo_messages", {"Image": imageToCritique, "Messages": data});
+	});
 });
 
 // app.post("/update", function (req, res) {
