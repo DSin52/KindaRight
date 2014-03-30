@@ -342,7 +342,7 @@ app.post("/:repo_id/messages", function (req, res) {
 			return console.log(err);
 		}
 		res.send(200);
-	})
+	});
 });
 
 app.get("/:repo_id/messages", function (req, res) {
@@ -357,6 +357,7 @@ app.get("/:repo_id/messages", function (req, res) {
 
 app.get("/get/repository/:pictureid/view", function (req, res) {
 	var imageToCritique = req.path.substring(0, req.path.length - 5);
+	console.log("TESTING: " + imageToCritique);
 	db.getMessages(_db, req, true, function (err, data) {
 		console.log(data);
 		router.route(req, res, "repo_messages", {"Image": imageToCritique, "Messages": data});
