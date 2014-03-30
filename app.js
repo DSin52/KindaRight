@@ -204,6 +204,7 @@ app.get("/search", function (req, res) {
 app.get("/users/:userid", function (req, res) {
 	if (req.cookies.loggedIn) {
 		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+			console.log("Account is: " + JSON.stringify(account));
 			var repositories = [];
 			for (var key in account.Repositories) {
 				repositories.push(key);
