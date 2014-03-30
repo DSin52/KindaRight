@@ -1,26 +1,10 @@
-body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #111;
-}
-
 a {
   color: #00B7FF;
 }
 
-logo {
-	font-family: 'Swanky and Moo Moo', cursive;
-	color: #fff;
-	font-style: normal;
-}
-
-p {
-	color: #FFF;
-	font-size: 3rem;
-	font-family: 'Josefin Sans', sans-serif;
-}
-
-.justify {
-	text-align: justify;
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #111;
 }
 
 h1 {
@@ -52,11 +36,25 @@ li {
 		list-style: none;
 }
 
+logo {
+	font-family: 'Swanky and Moo Moo', cursive;
+	color: #fff;
+	font-style: normal;
+}
 
+p {
+	color: #FFF;
+	font-size: 3rem;
+	font-family: 'Josefin Sans', sans-serif;
+}
 
-#title {
-	font-size: 35px;
-	font-style: italic;
+#loginButton {
+	padding-left: 15px;
+}
+
+#create-formgroup {
+	padding: 15px;
+	width: 300px;
 }
 
 #modal-forgot {
@@ -67,13 +65,17 @@ li {
 	text-align: center;
 }
 
-#create-formgroup {
-	padding: 15px;
-	width: 300px;
+#repo {
+	background-color: gray;
 }
 
-#loginButton {
-	padding-left: 15px;
+#settings_form {
+	background-color: white;
+}
+
+#title {
+	font-size: 35px;
+	font-style: italic;
 }
 
 #userId {
@@ -81,17 +83,80 @@ li {
 	color: white;
 }
 
-
-#settings_form {
-	background-color: white;
-}
-
-#repo {
-	background-color: gray;
-}
-
-.center-text {
+.center-image {
 	text-align: center;
+	padding-bottom: 20px;
+}
+
+.column {
+	float: left;
+	text-align: justify;
+	display: inline-block;
+	width: 40%;
+	height: 100%;
+	
+	padding: 10px;
+}
+
+.content-container {
+	width: 100%;
+	min-height: 100px;
+	border: #000 solid 1px;
+	background: #222;
+
+	-webkit-box-shadow: 0px 0px 12px 1px #000 inset;
+}
+.dark-head {
+	
+	margin-top: 90px;
+	background: #111;
+}
+
+.fine-print {
+	font-size: 14pt;
+	color: #FFF;
+}
+
+
+.footer {
+	margin: 0 auto;
+	min-height: 20%;
+	padding-top: 2%;
+	background: #444;
+}
+
+.folder {
+	text-align: center;	
+	padding-top: 47%;
+	display: inline-block;
+	background: url("../images/folder-black.png") no-repeat center center;
+	background-size: 100%;
+	color: #0FF;
+	margin: 10px;
+	width: 300px;
+	height: 300px;
+}
+
+.grey-border {
+	border: #555 solid 1px;
+}
+
+.header {
+	margin: 0 auto;
+	padding: 10px;
+	padding-top: 80px;
+	min-height: 100%;
+
+	background: #fff  url('../images/book-bg.jpg') no-repeat fixed right bottom;
+	
+}
+
+.inline {
+	display: inline-block;
+}
+
+.justify {
+	text-align: justify;
 }
 
 .light-accent {
@@ -107,61 +172,6 @@ li {
 	
 	background: #111;
 	margin: 10px;
-}
-
-.header {
-	margin: 0 auto;
-	padding: 10px;
-	padding-top: 80px;
-	min-height: 100%;
-
-	background: #fff  url('../images/book-bg.jpg') no-repeat fixed right bottom;
-	
-}
-
-.dark-head {
-	
-	margin-top: 90px;
-	background: #111;
-}
-
-.footer {
-	margin: 0 auto;
-	min-height: 20%;
-	padding-top: 2%;
-	background: #444;
-}
-
-.column {
-	float: left;
-	text-align: justify;
-	display: inline-block;
-	width: 40%;
-	height: 100%;
-	
-	padding: 10px;
-}
-
-.right {
-	float: right;
-}
-.relative {
-	position: relative;
-}
-.folder {
-	text-align: center;	
-	padding-top: 47%;
-	display: inline-block;
-	background: url("../images/folder-black.png") no-repeat center center;
-	background-size: 100%;
-	color: #0FF;
-	margin: 10px;
-	width: 300px;
-	height: 300px;
-}
-
-.inline {
-	display: inline-block;
 }
 
 .picture {
@@ -207,18 +217,11 @@ li {
 	
 }
 
-.fine-print {
-	font-size: 14pt;
-	color: #FFF;
+.right {
+	float: right;
 }
-
-.content-container {
-	width: 100%;
-	min-height: 100px;
-	border: #000 solid 1px;
-	background: #222;
-
-	-webkit-box-shadow: 0px 0px 12px 1px #000 inset;
+.relative {
+	position: relative;
 }
 
 .tags {

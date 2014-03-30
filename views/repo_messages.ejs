@@ -37,7 +37,10 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
-  		<img id="pic_test" src=<%=Image%> height="300px" >
+	<div class="dark-head">
+  		<div class="center-image">
+  			<img id="pic_test" class="" src=<%=Image%> height="300px" >
+  		</div>
   		<div class="container">
   			<div class="messages">
 
@@ -52,14 +55,16 @@
 
   			</div>
   		</div>
-  		 <div class="container">
-	      <div id="chatPanel" class="ui-widget-content">
-	          <div id="messages">
-	      </div>
-          <textarea class="form-control" id="chat_message" placeholder="Enter message here"></textarea>
-          <button type="submit" class="btn btn-success" id="message_submit">Add Comment</button>
-
-      </div>
+		<div class="container">
+			<div id="chatPanel" class="ui-widget-content">
+				<!-- POSTED MESSAGES -->
+				<div id="messages"></div>
+				<!-- TEXT BOX TO-POST -->
+				<textarea class="form-control" id="chat_message" placeholder="Enter message here"></textarea>
+				<button type="submit" class="btn btn-success" id="message_submit">Add Comment</button>
+		
+      		</div>
+    	</div>
     </div>
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>
