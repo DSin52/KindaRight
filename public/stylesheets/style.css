@@ -11,7 +11,7 @@ h1 {
 	margin: 0 auto;
 	color:  #0FF;
 	text-align: center;
-	font-family: 'Linden Hill', serif;
+	font-family: 'Josefin Sans', serif;
 	font-size: 72pt;
 	padding-left: 10px;
 }
@@ -19,7 +19,7 @@ h1 {
 h2 {
 	color: #0FF;
 	font-size: 28pt;
-	font-family: 'Josefin Sans', serif;
+	font-family: 'Josefin Sans';
 	width: 100%;
 	margin: 0 auto;
 	text-align: center;
@@ -45,7 +45,7 @@ logo {
 p {
 	color: #FFF;
 	font-size: 3rem;
-	font-family: 'Josefin Sans', sans-serif;
+	font-family: 'Linden Hill', serif;
 }
 
 
@@ -101,7 +101,7 @@ p {
 	background: #212121;
 	margin-bottom: 10px;
 
-	background: url("../images/splash.jpg") fixed;
+	background: url("../images/wood-bg.jpg") fixed center center;
 }
 
 .gradient-bg {
@@ -326,6 +326,18 @@ p {
 	padding-top: 200px;
 }
 
+#repositoryButton {
+	width: 200px;
+	height: 250px;
+	color: #fff;
+	background-color: #333;
+
+	margin-right: 20px;
+
+	text-align: center;
+	padding-top: 200px;
+}
+
 #chat_message {
 	background: #333;
 	color: #FFF;
@@ -339,5 +351,5 @@ p {
 }
 
 #pic_test {
-	width: 100%;
+	/*width: 100%;*/
 }

@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
   </head>
-  <body class="gradient-bg">
+  <body >
   
   <!-- NavBar Object -->
 	  <nav class="navbar navbar-inverse" role="navigation">
@@ -38,23 +38,28 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
-  	<div class="page dark-head">
+  	<div class="page accent-head">
   		
   	    <p id="userId"><%= First_Name %> <%=Last_Name %></p>
   	    <p id="discipline">Discipline: <%= Discipline %></p>
 		<img src=<%=Profile_Picture %> height="150" width="125">
-	    <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button>
-		<h1>Projects</h1>
+	    <!-- <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button> -->
 
-
+	</div>
+	<div class="page">
 		<% if (Repositories.length) { %>
 		  <ul id="repos">
+		  	<div class="relative inline" id="repositoryButton">
+	    		<div class="list-overlay"></div>
+	    		<li class="inline">Add</li>
+	    	</div>
 		    <% Repositories.forEach(function(name){ %>
 		    	<div class="relative inline" id="repo_list">
 		    		<div class="list-overlay"></div>
 		    		<li class="inline"><%= name %></li>
 		    	</div>
 		    <% }) %>
+
 		  </ul>
 		<% } %>
 	</div>

@@ -44,8 +44,8 @@ $(document).ready(function(event) {
   function showAccountButton() {
     if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {
       $("#accountButton").text("Account Settings");
-      $("#repositoryButton").text("Create Repository");
-      $("#repositoryButton").click(function (event) {
+      // $("#repositoryButton").text("Create Repository");
+      $("#repos").children("#repositoryButton").click(function (event) {
           window.location.href="/repository/create/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
       });
       $("#accountButton").click(function (event) {
