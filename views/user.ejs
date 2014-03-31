@@ -50,7 +50,10 @@
 		<% if (Repositories.length) { %>
 		  <ul id="repos">
 		    <% Repositories.forEach(function(name){ %>
-		      	<li class="inline"><%= name %></li>
+		    	<div class="relative inline" id="repo_list">
+		    		<div class="pictures-overlay"></div>
+		    		<li class="inline"><%= name %></li>
+		    	</div>
 		    <% }) %>
 		  </ul>
 		<% } %>
