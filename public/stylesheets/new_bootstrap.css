@@ -66,3 +66,17 @@
 	/*box-shadow: 0 10px 10px 10px #000;
 	-webkit-box-shadow: 0 3px 10px 2px #000;*/
 }
+
+#chat_message {
+	background-color: #222;
+}
+
+#chat_message:focus {
+	/*border-color: #0FF;*/
+	-webkit-box-shadow: 0 0 10px 1px #0FF;
+	box-shadow: 0 0 0 0 #000;
+
+	background-color: #444;
+	color: #FFF;
+
+}
