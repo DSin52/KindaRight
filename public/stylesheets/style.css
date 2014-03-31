@@ -100,6 +100,8 @@ p {
 	padding-top: 90px;
 	background: #212121;
 	margin-bottom: 10px;
+
+	background: url("../images/splash.jpg") fixed;
 }
 
 .gradient-bg {
@@ -158,7 +160,7 @@ p {
 	padding-top: 80px;
 	min-height: 100%;
 	
-	background: #fff  url('../images/book-bg.jpg') no-repeat fixed right bottom;
+	background: #fff  url('../images/splash.jpg') no-repeat fixed left center;
 	
 }
 
