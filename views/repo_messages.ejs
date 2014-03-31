@@ -37,35 +37,38 @@
 	    </div>
 	  </nav>
   	<!-- End NavBar Object -->
-	<div class="page dark-head">
-  		<div class="center-image">
-  			<img id="pic_test" class="" src=<%=Image%> height="300px" >
-  		</div>
-  		<div class="container">
-  			<div class="messages">
-
+	<div class="page accent-head">
+		<div class="container">
+	  		<div class="center-image">
+	  			<img id="pic_test" src=<%=Image%> >
+	  		</div>
+	  	</div>
+    </div>
+	<div class="page">
+		<div class="container">	
+			<div class="messages">
+			
 				<% if (Messages && Messages.length) { %>
 				  <div id="_repos" class="visible-lg visible-md">
 				    <% for (var i = 0; i < Messages.length; i++){ %>
-				    	<p><%=Messages[i].Username%> said: <%=Messages[i].Message%></p>
+				    	<p class="inline blue-fg"><%=Messages[i].Username%> &nbsp</p><p class="inline scrawl"><%=Messages[i].Message%></p><p></p>
 				    <% } %>
 				  </div>
 				<% } %>
 
 
-  			</div>
-  		</div>
-		<div class="container">
+				
+			</div>
 			<div id="chatPanel" class="ui-widget-content">
-				<!-- POSTED MESSAGES -->
+				
 				<div id="messages"></div>
 				<!-- TEXT BOX TO-POST -->
 				<textarea class="form-control" id="chat_message" placeholder="Enter message here"></textarea>
 				<button type="submit" class="btn btn-success" id="message_submit">Add Comment</button>
 		
-      		</div>
-    	</div>
-    </div>
+	  		</div>
+	  	</div>
+	</div>
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>

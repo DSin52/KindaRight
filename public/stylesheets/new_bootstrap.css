@@ -60,7 +60,8 @@
 	width: 100%;
 	margin-bottom: 0px;
 	border-radius: 0px;
+	background: #222;
 	
-	box-shadow: 0 10px 10px 10px #333;
+	box-shadow: 0 10px 10px 10px #000;
 	-webkit-box-shadow: 0 3px 10px 2px #000;
 }
