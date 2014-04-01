@@ -55,7 +55,7 @@ p {
 	text-align: center;
 	padding-bottom: 20px;
 
-
+	
 
 }
 
@@ -87,6 +87,8 @@ p {
 	
 	/*background: #111;*/
 	padding: 10px;
+	padding-left: 15%;
+	padding-right: 15%;
 }
 
 .dark-head {
@@ -155,7 +157,7 @@ p {
 
 
 .header {
-	margin: 0 auto;
+	/*margin: 0 auto;*/
 
 	padding-top: 80px;
 	min-height: 100%;
@@ -351,5 +353,5 @@ p {
 }
 
 #pic_test {
-	/*width: 100%;*/
+	max-width: 100%;
 }
