@@ -109,7 +109,7 @@ p {
 	background: #212121;
 	margin-bottom: 10px;
 
-	background: url("../images/wood-bg.jpg") fixed center center;
+	/*background: url("../images/wood-bg.jpg") fixed center center;*/
 }
 
 .gradient-bg {
