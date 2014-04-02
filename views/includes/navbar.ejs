@@ -1,0 +1,22 @@
+  <nav class="navbar navbar-inverse" role="navigation">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></button>
+        <a class="navbar-brand" id="title" href="http://localhost:3000/main"><img src="/images/nav_logo.png" > &nbsp<logo>KindaRight</logo></a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse-1">
+      <form class="navbar-form pull-right" id="logout" method="POST" action="/logout">
+        <button type="submit" class="btn btn-info" id="accountButton">My Account</button>
+          <button type="submit" class="btn btn-success" id="logOutButton">Log Out</button>
+      </form>
+       <div class="col-xs-8 col-sm-6 pull-right">
+          <form class="navbar-form" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search" name="search" id="searchbar">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit" id="searchbutton"><span class="glyphicon glyphicon-search"></span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
