@@ -2,40 +2,19 @@
 <html>
   <head>
     <title>KindaRight</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% include includes/head_common.ejs %>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/new_bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/shapes.css">
-    <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Josefin+Sans|Linden+Hill' rel='stylesheet' type='text/css'>
+    
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
   </head>
   <body>
    
     <!-- NavBar Object -->
-	  <nav class="navbar navbar-inverse" role="navigation">
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></button>
-	      <a class="navbar-brand" id="title" href="http://localhost:3000/main"><logo>KindaRight</logo></a>
-	    </div>
-	    <div class="collapse navbar-collapse" id="navbar-collapse-1">
-	    <form class="navbar-form pull-right" id="logout" method="POST" action="/logout">
-	    	<button type="submit" class="btn btn-info" id="accountButton">My Account</button>
-	        <button type="submit" class="btn btn-success" id="logOutButton">Log Out</button>
-	    </form>
-		   <div class="col-xs-8 col-sm-6 pull-right">
-	        <form class="navbar-form" role="search">
-	          <div class="input-group">
-	            <input type="text" class="form-control" placeholder="Search" name="search" id="searchbar">
-	            <div class="input-group-btn">
-	              <button class="btn btn-default" type="submit" id="searchbutton"><span class="glyphicon glyphicon-search"></span></button>
-	            </div>
-	          </div>
-	        </form>
-	      </div>
-	    </div>
-	  </nav>
+	  <% include includes/navbar.ejs %>
   	<!-- End NavBar Object -->
 
 	<div class="page dark-head">

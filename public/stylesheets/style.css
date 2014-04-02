@@ -4,7 +4,13 @@ a {
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #111;
+  /*background-color: #111;*/
+
+  /*background: -webkit-linear-gradient(left, #44036f, #111, #111, #111, #111, #111, #44036f);
+  background: linear-gradient(left, #44036f, #111, #111, #111, #111, #111, #44036f);*/
+
+  background: -webkit-linear-gradient(left, #222, #000, #000, #000, #000, #222);
+  background: linear-gradient(left, #222, #000, #000, #000, #000, #222);
 }
 
 h1 {
@@ -162,7 +168,8 @@ p {
 	padding-top: 80px;
 	min-height: 100%;
 	
-	background: #fff  url('../images/splash.jpg') no-repeat fixed left center;
+	background: #fff  url('../images/splash.jpg') no-repeat fixed right top;
+	
 	
 }
 
@@ -188,7 +195,7 @@ p {
 	width: 100%;
 	height: 100%;
 
-	-webkit-box-shadow: 0px 0px 20px 10px #111 inset;
+	-webkit-box-shadow: 0px 0px 10px 1px #000 inset;
 	-webkit-transitiion: -webkit-box-shadow .5s ease-out;	
 
 	-webkit-transition: background-color .5s ease-out;
@@ -304,7 +311,7 @@ p {
 }
 
 #repos {
-	padding: 10px;
+	padding: 0px;
 }
 
 #repo {
@@ -323,6 +330,7 @@ p {
 	background-color: #333;
 
 	margin-right: 20px;
+	margin-bottom: 20px;
 
 	text-align: center;
 	padding-top: 200px;
@@ -332,7 +340,7 @@ p {
 	width: 200px;
 	height: 250px;
 	color: #fff;
-	background-color: #333;
+	background: #333  url("../images/add.png"); 
 
 	margin-right: 20px;
 
