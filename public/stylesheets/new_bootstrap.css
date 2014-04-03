@@ -60,7 +60,23 @@
 	width: 100%;
 	margin-bottom: 0px;
 	border-radius: 0px;
+	/*border-bottom: #999 solid 5px;*/
+	background: rgba(0,0,0, .9);
 	
-	box-shadow: 0 10px 10px 10px #333;
-	-webkit-box-shadow: 0 3px 10px 2px #000;
+	/*box-shadow: 0 10px 10px 10px #000;
+	-webkit-box-shadow: 0 3px 10px 2px #000;*/
+}
+
+#chat_message {
+	background-color: #222;
+}
+
+#chat_message:focus {
+	/*border-color: #0FF;*/
+	-webkit-box-shadow: 0 0 10px 1px #0FF;
+	box-shadow: 0 0 0 0 #000;
+
+	background-color: #444;
+	color: #FFF;
+
 }

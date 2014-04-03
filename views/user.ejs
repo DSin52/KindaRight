@@ -2,59 +2,52 @@
 <html>
   <head>
     <title>KindaRight</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% include includes/head_common.ejs %>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/new_bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/shapes.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/user.css">
-    <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Josefin+Sans|Linden+Hill' rel='stylesheet' type='text/css'>
+    
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
   </head>
   <body>
   
   <!-- NavBar Object -->
-	  <nav class="navbar navbar-inverse" role="navigation">
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></button>
-	      <a class="navbar-brand" id="title" href="http://localhost:3000/main"><logo>KindaRight</logo></a>
-	    </div>
-	    <div class="collapse navbar-collapse" id="navbar-collapse-1">
-	    <form class="navbar-form pull-right" id="logout" method="POST" action="/logout">
-	    	<button type="submit" class="btn btn-info" id="accountButton">Account Settings</button>
-	        <button type="submit" class="btn btn-success" id="logOutButton">Log Out</button>
-	    </form>
-		   <div class="col-xs-8 col-sm-6 pull-right">
-	        <form class="navbar-form" role="search">
-	          <div class="input-group">
-	            <input type="text" class="form-control" placeholder="Search" name="search" id="searchbar">
-	            <div class="input-group-btn">
-	              <button class="btn btn-default" type="submit" id="searchbutton"><span class="glyphicon glyphicon-search"></span></button>
-	            </div>
-	          </div>
-	        </form>
-	      </div>
-	    </div>
-	  </nav>
+	  <% include includes/navbar.ejs %>
   	<!-- End NavBar Object -->
-  	<div class="page dark-head">
+  	<div class="page accent-head">
   		
   	    <p id="userId"><%= First_Name %> <%=Last_Name %></p>
-  	    <p id="discipline">Discipline: <%= Discipline %></p>
+  	    <h3 id="discipline">Discipline: <%= Discipline %></h3>
 		<img src=<%=Profile_Picture %> height="150" width="125">
-	    <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button>
-		<h1>Projects</h1>
 
-
-		<% if (Repositories.length) { %>
-		  <ul id="repos">
-		    <% Repositories.forEach(function(name){ %>
-		      	<li class="inline"><%= name %></li>
-		    <% }) %>
-		  </ul>
-		<% } %>
 	</div>
+	<div class="page">
+    <% if (Repositories.length) { %>
+      <ul id="repos">
+        <div class="relative inline" id="repositoryButton">
+          <div class="list-overlay"></div>
+          <li class="inline"></li>
+        </div>
+        <% Repositories.forEach(function(name){ %>
+          <div class="relative inline" id="repo_list">
+            <div class="list-overlay"></div>
+            <li class="inline"><%= name %></li>
+          </div>
+        <% }) %>
+
+      </ul>
+    <% } else { %>
+      <ul id="repos">
+          <div class="relative inline" id="repositoryButton">
+            <div class="list-overlay"></div>
+            <li class="inline"></li>
+          </div>
+        </ul>
+    <% } %>
+  </div>
 
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>

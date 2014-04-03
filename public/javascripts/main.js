@@ -35,17 +35,14 @@ $(document).ready(function(event) {
       $.post("/" + pathToSubmitTo + "/messages", {"id": pathToSubmitTo, 
         "Username": JSON.parse($.cookie().loggedIn.substring(2)).Username, "Message": message}, function (data) {
           location.reload();
-          // $.get("/" + pathToSubmitTo + "/messages", function (data) {
-          //     // $("#messages").append("<p>" + data.Messages[data.Messages.length - 1].Username + " said: " + data.Messages[data.Messages.length - 1].Message+ "</p>");
-          // });
       });
   });
 
   function showAccountButton() {
     if($.cookie().loggedIn && JSON.parse($.cookie().loggedIn.substring(2)).Username === window.location.pathname.substring(7)) {
       $("#accountButton").text("Account Settings");
-      $("#repositoryButton").text("Create Repository");
-      $("#repositoryButton").click(function (event) {
+      // $("#repositoryButton").text("Create Repository");
+      $("#repos").children("#repositoryButton").click(function (event) {
           window.location.href="/repository/create/" + JSON.parse($.cookie().loggedIn.substring(2)).Username;
       });
       $("#accountButton").click(function (event) {
@@ -70,8 +67,8 @@ $(document).ready(function(event) {
      }
   }
   function repoLaunch() {
-      $('#repos li').click(function() {
-        window.location.href = "/repository/" + window.location.pathname.substring(7) + "/" + $(this).text();
+      $('#repos #repo_list').click(function() {
+        window.location.href = "/repository/" + window.location.pathname.substring(7) + "/" + $(this).children("li").text();
     });
   }
 

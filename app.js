@@ -83,10 +83,20 @@ if ("development" == app.get("env")) {
 
 app.get("/", function (req, res) {
 	if (req.cookies.loggedIn) {
-		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, 
-			"Email": req.cookies.loggedIn.Email, 
-			"First_Name": req.cookies.loggedIn.First_Name, 
-			"Last_Name": req.cookies.loggedIn.Last_Name});
+		db.findAllPictures(_db, function (err, ids) {
+      	if (err) {
+      		return res.send(500);
+      	}
+      	return router.route(req, res, "main", 
+      	{
+      		"Email": req.cookies.loggedIn.Email, 
+      	 	"First_Name": req.cookies.loggedIn.First_Name, 
+      	 	"Last_Name": req.cookies.loggedIn.Last_Name,
+      	 	"Username": req.cookies.loggedIn.Username,
+      	 	"Pictures" : ids,
+      	 	"Tags": ""
+      	});
+      });
 	} else {
 		router.route(req, res, "home");
 	}
@@ -111,26 +121,61 @@ app.post("/main", function(req, res, next) {
       var minute = 500000;
       res.cookie("loggedIn", {"Username": user.Username, "Email": user.Email, 
       	"First_Name": user.First_Name, "Last_Name": user.Last_Name}, {"maxAge": minute});
-      return router.route(req, res, "main", 
+      db.findAllPictures(_db, function (err, ids) {
+      	if (err) {
+      		return res.send(500);
+      	}
+      	return router.route(req, res, "main", 
       	{
       		"Email": user.Email, 
       	 	"First_Name": user.First_Name, 
       	 	"Last_Name": user.Last_Name,
-      	 	"Username": user.Username
+      	 	"Username": user.Username,
+      	 	"Pictures" : ids,
+      	 	"Tags": ""
       	});
+      });
     });
   })(req, res, next);
 });
 
 app.get("/main", function (req, res) {
 	if (req.cookies.loggedIn) {
-		router.route(req, res, "main", {"Username": req.cookies.loggedIn.Username, 
-			"Email": req.cookies.loggedIn.Email, 
-			"First_Name": req.cookies.loggedIn.First_Name, 
-			"Last_Name": req.cookies.loggedIn.Last_Name});
+		db.findAllPictures(_db, function (err, ids) {
+	      	if (err) {
+	      		return res.send(500);
+	      	} else if (req.query && req.query.tag) {
+	      		db.findAllPicturesForTag(_db, req.query.tag, function(err, tagIds){
+	      			console.log(tagIds.length);
+	      			if (err) {
+	      				return res.send(500);
+	      			} else {
+	      				return router.route(req, res, "main", 
+						{
+							"Username": req.cookies.loggedIn.Username, 
+							"Email": req.cookies.loggedIn.Email, 
+							"First_Name": req.cookies.loggedIn.First_Name, 
+							"Last_Name": req.cookies.loggedIn.Last_Name,
+							"Pictures": ids,
+							"Tags": tagIds
+						});
+	      			}
+	      		});	      	
+	      	} else {
+	      		return router.route(req, res, "main", 
+				{
+					"Username": req.cookies.loggedIn.Username, 
+					"Email": req.cookies.loggedIn.Email, 
+					"First_Name": req.cookies.loggedIn.First_Name, 
+					"Last_Name": req.cookies.loggedIn.Last_Name,
+					"Pictures": ids,
+					"Tags": ""
+				});
+	      	}
+		});
 	} else {
 		return res.redirect("/");
-	}
+	} 
 });
 
 app.get("/me", function (req, res) {
@@ -279,7 +324,7 @@ app.post("/repository", function (req, res) {
 						if (err) {
 							res.send(500, err);
 						} else {
-							res.redirect("/");
+							res.redirect("/users/" + req.cookies.loggedIn.Username);
 						}
 					});
 				} else {
@@ -287,7 +332,7 @@ app.post("/repository", function (req, res) {
 						if (err) {
 							res.send(500, err);
 						} else {
-							res.redirect("/");
+							res.redirect("/users/" + req.cookies.loggedIn.Username);
 						}
 					});
 				}
@@ -357,9 +402,7 @@ app.get("/:repo_id/messages", function (req, res) {
 
 app.get("/get/repository/:pictureid/view", function (req, res) {
 	var imageToCritique = req.path.substring(0, req.path.length - 5);
-	console.log("TESTING: " + imageToCritique);
 	db.getMessages(_db, req, true, function (err, data) {
-		console.log(data);
 		router.route(req, res, "repo_messages", {"Image": imageToCritique, "Messages": data});
 	});
 });

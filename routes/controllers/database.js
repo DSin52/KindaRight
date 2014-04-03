@@ -136,45 +136,86 @@ function findAndModifyRepo(db, query, repo_name, data, propertyName, callback) {
 	db.collection("Users").findAndModify(query, null, setModifier, callback);
 }
 
-function useGridFS(db, req, fileName, gridName, isArray, callback) {
-	var tags = req.body.tags.split(",");
-	
-	findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, tags, ".tags", function (err) {
-		if (isArray) {
-		var array = [];
-		for (var i = 0; i < req.files[fileName].length; i++) {
-			array[i] = req.files[fileName][i].path;
+function sanitizeTags(tags, callback) {
+	var oldTags = tags.split(",");
+	var newTags = [];
+
+	for (var i = 0; i < oldTags.length; i++) {
+		oldTags[i] = oldTags[i].replace(/ /g,'')
+		if (oldTags[i] && oldTags[i].length > 0)
+		{
+			newTags[i] = oldTags[i];
 		}
-		async.eachSeries(
-		    array, function (item, next) {
-		    	fs.readFile(item, function(err, data) {
-			        if (!err) {
-			          	var grid = new Grid(db, gridName);  
-				 		var buffer = new Buffer(data);
-					    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
-					    	if (err) {
-					    		return next(err);
-					    	}
-						    findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", next);
-			        	});
-			    }
-			});
-		    }, function (err) {
-		    	callback(err);
-		    });
-	} else {
-		fs.readFile(req.files[fileName].path, function (err, data) {
-			var grid = new Grid(db, gridName);  
-	 		var buffer = new Buffer(data);
-		    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
-		    	if (err) {
-		    		return callback(err);
-		    	} 
-		    	var tags = req.body.tags.split(",");
-				findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", callback);
-	  		});
-		});
 	}
+	callback(newTags);
+}
+
+function addTags(db, tags, pictureId, callback) {
+	async.eachSeries(
+		tags, function (item, next) {
+			var setModifier = { $push: {} };
+			db.collection("Tags").update({"Tag": item}, {$push: {"Pictures": pictureId}}, {upsert: true}, next);
+		}, function (err) {
+			if (err) {
+				console.log(err);
+				return callback(err);
+			}
+		}
+	);
+	return callback(null);
+}
+
+function useGridFS(db, req, fileName, gridName, isArray, callback) {
+	sanitizeTags(req.body.tags, function (tags) {
+		findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, tags, ".tags", function (err) {
+			if (isArray) {
+			var array = [];
+			for (var i = 0; i < req.files[fileName].length; i++) {
+				array[i] = req.files[fileName][i].path;
+			}
+			async.eachSeries(
+			    array, function (item, next) {
+			    	fs.readFile(item, function(err, data) {
+				        if (!err) {
+				          	var grid = new Grid(db, gridName);  
+					 		var buffer = new Buffer(data);
+						    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+						    	if (err) {
+						    		return next(err);
+						    	}
+							    findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", function (err) {
+							    	addTags(db, tags, fileInfo._id, function (err) {
+							    		if (err) {
+							    			next(err);
+							    		} else {
+							    			db.collection("Pictures").insert({"id": fileInfo._id}, next);
+							    		}
+							    	});
+							    });
+				        	});
+				    }
+				});
+			    }, function (err) {
+			    	callback(err);
+			    });
+		} else {
+			fs.readFile(req.files[fileName].path, function (err, data) {
+				var grid = new Grid(db, gridName);  
+		 		var buffer = new Buffer(data);
+			    grid.put(buffer, {metadata:{category:'text'}, content_type: 'image/jpeg'}, function(err, fileInfo) {
+			    	if (err) {
+			    		return callback(err);
+			    	} 
+			    	var tags = req.body.tags.split(",");
+					findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", function (err) {
+						addTags(db, tags, fileInfo._id, function (err) {
+							db.collection("Pictures").insert({"id": fileInfo._id}, callback);
+						});
+					});
+		  		});
+			});
+		}
+		});
 	});
 }
 
@@ -223,6 +264,38 @@ function getMessages(db, req, initial, callback) {
 	});
 }
 
+function findAllPictures(db, callback) {
+	var imgIds = [];
+	db.collection("Pictures").find().toArray(function (err, ids) {
+		if (err) {
+			return callback(err);
+		}
+		ids = ids.reverse();
+		for (var i = 0; i < ids.length; i++) {
+			imgIds.push("http://localhost:3000/get/repository/" + ids[i].id);
+		}
+		callback(null, imgIds);
+	});
+}
+
+function findAllPicturesForTag(db, tag, callback) {
+	var imgIds = [];
+	db.collection("Tags").findOne({"Tag": tag}, function (err, acct) {
+		if (err) {
+			return callback(err);
+		}
+		else if (acct) {
+			acct.Pictures = acct.Pictures.reverse();
+			for (var i = 0; i < acct.Pictures.length; i++) {
+				imgIds.push("http://localhost:3000/get/repository/" + acct.Pictures[i]);
+			}
+			return callback(null, imgIds);
+		} else {
+			return callback(null, imgIds);
+		}
+	});
+}
+
 module.exports.insertIntoDB = insertIntoDB;
 module.exports.checkExists = checkExists;
 module.exports.find = find;
@@ -233,3 +306,5 @@ module.exports.findAndModifyRepo = findAndModifyRepo;
 module.exports.useGridFS = useGridFS;
 module.exports.addMessage = addMessage;
 module.exports.getMessages = getMessages;
+module.exports.findAllPictures = findAllPictures;
+module.exports.findAllPicturesForTag = findAllPicturesForTag;

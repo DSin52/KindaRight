@@ -3,21 +3,22 @@
 <html>
   <head>
     <title>KindaRight</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/new_bootstrap.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/shapes.css">
-    <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Josefin+Sans|Linden+Hill' rel='stylesheet' type='text/css'>
-
-
+    
+    <% include includes/head_common.ejs %>
   </head>
   <body>
+  
+
   <!-- NavBar Object -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"></button>
-      <a class="navbar-brand" id="title" href="http://localhost:3000"><logo>KindaRight</logo></a>
+      <a class="navbar-brand" id="title" href="http://localhost:3000"><img src="images/nav_logo.png">&nbsp<logo>KindaRight</logo></a>
     </div>
     <div class="collapse navbar-collapse" id="navbar-collapse-1">
       <form class="navbar-form navbar-right" id="login" method="POST" action="/main">
@@ -220,7 +221,7 @@
   </div>
 
 <!-- NETWORKING SECTION -->
-  <div class="page solid-bg-dgray">
+  <div class="page gradient-bg">
     <h1>What Can I do here?</h1>
 
     <div class="container-fluid">
