@@ -22,26 +22,32 @@
   	    <p id="userId"><%= First_Name %> <%=Last_Name %></p>
   	    <h3 id="discipline">Discipline: <%= Discipline %></h3>
 		<img src=<%=Profile_Picture %> height="150" width="125">
-	    <!-- <button type="submit" class="btn btn-info" id="repositoryButton">Create Repository</button> -->
 
 	</div>
 	<div class="page">
-		<% if (Repositories.length) { %>
-		  <ul id="repos">
-		  	<div class="relative inline" id="repositoryButton">
-	    		<div class="list-overlay"></div>
-	    		<li class="inline"></li>
-	    	</div>
-		    <% Repositories.forEach(function(name){ %>
-		    	<div class="relative inline" id="repo_list">
-		    		<div class="list-overlay"></div>
-		    		<li class="inline"><%= name %></li>
-		    	</div>
-		    <% }) %>
+    <% if (Repositories.length) { %>
+      <ul id="repos">
+        <div class="relative inline" id="repositoryButton">
+          <div class="list-overlay"></div>
+          <li class="inline"></li>
+        </div>
+        <% Repositories.forEach(function(name){ %>
+          <div class="relative inline" id="repo_list">
+            <div class="list-overlay"></div>
+            <li class="inline"><%= name %></li>
+          </div>
+        <% }) %>
 
-		  </ul>
-		<% } %>
-	</div>
+      </ul>
+    <% } else { %>
+      <ul id="repos">
+          <div class="relative inline" id="repositoryButton">
+            <div class="list-overlay"></div>
+            <li class="inline"></li>
+          </div>
+        </ul>
+    <% } %>
+  </div>
 
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>

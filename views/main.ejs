@@ -21,17 +21,41 @@
     
     <div class="page dark-head">
       <h3>
-        Following
+        Tags
       </h3>
-        <div class="fluid-container content-container" id="following">
-          
+      <form class="navbar-form" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search" name="tag" id="tagbar">
+              <div class="input-group-btn">
+                <button class="btn btn-default" type="submit" id="tagbutton"><span class="glyphicon glyphicon-search"></span></button>
+              </div>
+            </div>
+      </form>
+        <div class="fluid-container content-container" id="community">
+         <% if (Tags.length) { %>
+          <% Tags.forEach(function(name){ %>
+            <a href=<%= name + "/view"%>>
+                  <!-- <div class="pictures-overlay"></div>
+                <div class="inline"> -->
+                  <img src=<%=name%> height="150" >
+                <!-- </div> -->
+                </a>
+          <% }) %>
+        <% } %>
         </div>
       
       <h3>
-        Suggestions
+        Community
       </h3>
       <div class="fluid-container content-container" id="suggestions">
-        
+        <% Pictures.forEach(function(name){ %>
+          <a href=<%= name + "/view"%>>
+                <!-- <div class="pictures-overlay"></div>
+              <div class="inline"> -->
+                <img src=<%=name%> height="150" >
+              <!-- </div> -->
+              </a>
+        <% }) %>
       </div>
     </div>
 

@@ -35,9 +35,6 @@ $(document).ready(function(event) {
       $.post("/" + pathToSubmitTo + "/messages", {"id": pathToSubmitTo, 
         "Username": JSON.parse($.cookie().loggedIn.substring(2)).Username, "Message": message}, function (data) {
           location.reload();
-          // $.get("/" + pathToSubmitTo + "/messages", function (data) {
-          //     // $("#messages").append("<p>" + data.Messages[data.Messages.length - 1].Username + " said: " + data.Messages[data.Messages.length - 1].Message+ "</p>");
-          // });
       });
   });
 
