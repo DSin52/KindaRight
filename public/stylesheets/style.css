@@ -116,8 +116,8 @@ p {
 	padding-top: 90px;
 	background: #212121;
 	margin-bottom: 10px;
-
-	max-height: 50%;
+	min-height: 10%;
+	/*max-height: 50%;*/
 
 	/*background: url("../images/wood-bg.jpg") fixed center center;*/
 }
