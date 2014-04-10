@@ -287,7 +287,6 @@ p {
 .image-container {
 	position: relative;
 	margin: 0 auto;
-	
 }
 
 .comment-container {
@@ -308,9 +307,9 @@ p {
 	margin: auto;
 	background-size: 100%;
 
-/*	-webkit-filter: blur(50px);
+	-webkit-filter: blur(50px);
 	filter: blur(50px);
-*/
+
 }
 
 .dark-layer {
