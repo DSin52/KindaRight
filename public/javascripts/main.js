@@ -4,6 +4,19 @@ $(document).ready(function(event) {
     $("#logout").submit();
   });
 
+
+  // console.log($('#actual-content').css('height'));
+  // $('#actual-content').css("max-width", $(".image-container").css.width());
+  // $('#actual-content').css("max-height", $(".image-container").css.height());
+  
+  //repo_messages getting the image right.
+  var height = $('.image').css("height");
+  var px = parseInt(height.substring(0, height.length - 2))/2;
+  console.log(px);
+  $('.image').css("top", -px);
+
+
+
   $( "#searchbar" ).autocomplete({
         minLength: 1,
         source: "/search",
