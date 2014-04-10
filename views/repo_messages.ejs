@@ -10,13 +10,27 @@
     
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
+    <style type="text/css">
+    	.image-page {
+    		background: url('<%=Image%>') center center;
+    		background-size: 100%;
+    	}
+
+    	.image {
+    		/*background: url('<%=Image%>') center center no-repeat;*/
+    		margin: 0 auto;
+    		text-align: center;
+
+
+    	}
+    </style>
   </head>
   <body>
   
   <!-- NavBar Object -->
 	  <% include includes/navbar.ejs %>
   	<!-- End NavBar Object -->
-	<div class="page accent-head">
+	<!-- <div class="page accent-head">
 		<div class="container">
 	  		<div class="center-image">
 	  			<img id="pic_test" src=<%=Image%> >
@@ -41,11 +55,38 @@
 			<div id="chatPanel" class="ui-widget-content">
 				
 				<div id="messages"></div>
-				<!-- TEXT BOX TO-POST -->
+				
 				<textarea class="form-control" id="chat_message" placeholder="Enter message here"></textarea>
 				<button type="submit" class="btn btn-success" id="message_submit">Add Comment</button>
 		
 	  		</div>
+	  	</div> -->
+
+	  	<div class="image-page">
+	  		<div class="dark-layer"></div>
+	  	</div>
+	  	<div class="image-container">
+	  		<div class="image">
+	  			<img src=<%= Image%>>
+	  		</div>
+	  		
+	  	</div>
+	  	<div class="comment-container">
+	  		<div id="chatPanel" class="ui-widget-content">
+				
+				<div id="messages"></div>
+				
+				<textarea class="form-control" id="chat_message" placeholder="Enter message here"></textarea>
+				<button type="submit" class="btn btn-success" id="message_submit">Add Comment</button>
+		
+	  		</div>
+	  		<% if (Messages && Messages.length) { %>
+			  <div id="_repos" class="visible-lg visible-md">
+			    <% for (var i = 0; i < Messages.length; i++){ %>
+			    	<p class="inline blue-fg"><%=Messages[i].Username%> &nbsp</p><p class="inline scrawl"><%=Messages[i].Message%></p><p></p>
+			    <% } %>
+			  </div>
+			<% } %>
 	  	</div>
 	</div>
   <!-- Script References -->
