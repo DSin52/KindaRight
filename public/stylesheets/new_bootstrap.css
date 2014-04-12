@@ -1,3 +1,4 @@
+.btn:focus,
 .btn {
 	-webkit-transition: color 1s ease-out;
 	-webkit-transition: background-color 1s ease-out;
@@ -5,7 +6,7 @@
 	transition: background-color 1s ease-out;
 }
 
-
+.btn-primary:focus,
 .btn-primary {
 	border: 0px;
 	background-color: #44036f;
@@ -16,7 +17,7 @@
 	color: #44036f;
 	background-color: #FFF;
 }
-
+.btn-info:focus,
 .btn-info {
 	border: 0px;
 	background-color: #44036f;
@@ -39,6 +40,7 @@
 	padding-right: 2.5%;
 }
 
+.btn-success:focus,
 .btn-success {
 	border: 0px;
 	background-color: #8F55B7;
