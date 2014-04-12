@@ -34,7 +34,8 @@
 	    		Tags: <%= Tags %>
 	    	</p>
     	</div>
-
+    </div>
+	<div class="page">
 		<% if (Repo.length) { %>
 		<!-- SCREEN FOR LARGE RESOLUTIONS -->
 		  <div id="_repos" class="visible-lg visible-md">
@@ -52,7 +53,7 @@
 			    	<a href=<%=name + "/view"%>>
 				      	<div class="pictures-overlay"></div>
 					    <div class="inline">
-			    			<img src=<%=name%> height="300px" >
+			    			<img src=<%=name%> width="250px" >
 					    </div>
 					    </a>
 			    	</div>
@@ -66,7 +67,7 @@
 			    <div class="picture-sm inline relative">
 			      	<div class="pictures-overlay"></div>
 				    <div class="inline">
-							<img id="pic_test" src=<%=name%> height="150px">		
+							<img src=<%=name%> height="150px">		
 				    </div>
 			    </div>
 		    <% }) %>

@@ -19,7 +19,7 @@
 	  <% include includes/navbar.ejs %>
   	<!-- End NavBar Object -->
     
-    <div class="page dark-head">
+    <div class="page head">
       <h3>
         Tags
       </h3>
@@ -45,16 +45,18 @@
         </div>
       
       <h3>
-        Community
+        Featured
       </h3>
-      <div class="fluid-container content-container" id="suggestions">
+      <div class="fluid-container" id="suggestions">
         <% Pictures.forEach(function(name){ %>
-          <a href=<%= name + "/view"%>>
+          <div class="main-page-thumbnail inline">
+            <a href=<%= name + "/view"%>>
                 <!-- <div class="pictures-overlay"></div>
               <div class="inline"> -->
                 <img src=<%=name%> height="150" >
               <!-- </div> -->
               </a>
+          </div>
         <% }) %>
       </div>
     </div>
