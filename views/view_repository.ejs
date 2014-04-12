@@ -39,27 +39,92 @@
 		<% if (Repo.length) { %>
 		<!-- SCREEN FOR LARGE RESOLUTIONS -->
 		  <div id="_repos" class="visible-lg visible-md">
-		    <% Repo.forEach(function(name){ %>
-		    	<!-- <a href=<%=name + "/view"%>><img id="pic_test" src=<%=name%> height="300px" ></a>
-			    <div class="picture inline relative">
-			      	<div class="pictures-overlay"></div>
-				    <div class="inline">
-		    			<a href=<%=name + "/test"%> id="imgMessages"><img id="pic_test" src=<%=name%> height="300px" ></a>
-				    </div>
-			    </div> -->
-				<!-- <a href=<%=name + "/view"%>><img id="pic_test" src=<%=name%> height="300px" ></a> -->
-			    
-			    	<div class="picture inline relative">
+		    <% 
+		    	var one = new Array();
+		    	var two = new Array();
+		    	var three = new Array();
+		    	var four = new Array();
+		    	var o = 0, t = 0, th = 0, f = 0, i = 0;
+		   		var name = null;
+		    	Repo.forEach(function(n){ 
+		    		if ( i == 0)
+		    			one[o++] = n;
+		    		if ( i == 1)
+		    			two[t++] = n;
+		    		if ( i == 2)
+		    			three[th++] = n;
+		    		if ( i == 3)
+		    			four[f++] = n;
+
+		    		i = (i + 1) % 4;
+		    	})
+		    %>
+
+			    	<!-- <div class="picture inline relative">
 			    	<a href=<%=name + "/view"%>>
 				      	<div class="pictures-overlay"></div>
 					    <div class="inline">
 			    			<img src=<%=name%> width="250px" >
 					    </div>
 					    </a>
-			    	</div>
+			    	</div> -->
+
+			    	
+					<div class="picture-column inline" >
+						<% for (var index = 0; index < one.length; index++) { %>
+							<div class="picture inline relative full-width">
+						    	<a href=<%=one[index % one.length] + "/view"%>>
+							      	<div class="pictures-overlay"></div>
+								    <div class="inline full-width">
+						    			<img src=<%= one[index % one.length]%> width="100%" >
+								    </div>
+							    </a>
+			    			</div>
+						<% } %>
+					</div>
+					<div class="picture-column inline">
+						<% for (var index = 0; index < two.length; index++) { %>
+							<div class="picture inline relative full-width">
+						    	<a href=<%=two[index % two.length] + "/view"%>>
+							      	<div class="pictures-overlay"></div>
+								    <div class="inline full-width">
+						    			<img src=<%= two[index % two.length]%> width="100%" >
+								    </div>
+							    </a>
+						    </div>
+						<% } %>
+					</div>
+					<div class="picture-column inline">
+						<% for (var index = 0; index < three.length; index++) { %>
+							<div class="picture inline relative full-width">
+						    	<a href=<%=three[index % three.length] + "/view"%>>
+							      	<div class="pictures-overlay"></div>
+								    <div class="inline full-width">
+						    			<img src=<%= three[index % three.length]%> width="100%" >
+								    </div>
+							    </a>
+							</div>
+						<% } %>
+					</div>
+					<div class="picture-column inline" >
+						<% for (var index = 0; index < four.length; index++) { %>
+							<div class="picture inline relative full-width">
+						    	<a href=<%=four[index % four.length] + "/view"%>>
+							      	<div class="pictures-overlay full-width"></div>
+								    <div class="inline full-width">
+						    			<img src=<%= four[index % four.length]%> width="100%" >
+								    </div>
+							    </a>
+							</div>
+						<% } %>
+					</div>
+
+										
+
+			    	
 			    
 
-		    <% }) %>
+		    
 		  </div>
 		  <!-- RESPONSIVE SCREEN FOR SMALL RESOLUTIONS -->
 		  <div id="_repos" class="hidden-lg hidden-md">

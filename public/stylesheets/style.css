@@ -23,6 +23,7 @@ body {
 	background: #000;
 }
 
+
 h1 {
 	margin: 0 auto;
 	color:  #0FF;
@@ -62,6 +63,13 @@ p {
 	color: #FFF;
 	font-size: 3rem;
 	font-family: 'Linden Hill', serif;
+}
+
+.full-width {
+	width: 100%;
+}
+.full-height {
+	height: 100%;
 }
 
 .center {
@@ -231,6 +239,12 @@ p {
 	text-decoration: none;
 	list-style: none;
 	
+}
+
+.picture-column {
+	vertical-align: top;
+	width: 24%;
+	margin: 5px;
 }
 
 .list-overlay {

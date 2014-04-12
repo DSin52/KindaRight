@@ -3,11 +3,24 @@ $(window).bind("resize", positionImage);
 
 function positionImage() {
 //repo_messages getting the image right.
-  var height = $('.image').css("height");
+  // $('.image').css('position', 'absolute')
+  var body = $('body').css("height");
+  var height = $('.image-2').css("height");
+  var navbar = $('.navbar').css("height");
+
+  $('.image-container').css('top', navbar);
+  // var imgspace = $('.image-container').css("height");
+  
+  console.log(navbar);
+  console.log(height);
   if (height != null) {
-    var px = parseInt(height.substring(0, height.length - 2))/2;
+    var img2px =  (parseInt(body.substring(0, body.length - 2)) - parseInt(navbar.substring(0, navbar.length - 2)))/2;
+    // var px = (parseInt(body.substring(0, body.length - 2)) - parseInt(navbar.substring(0, navbar.length - 2)))/2;
+    var px = (parseInt(height.substring(0, height.length - 2)))/2;
     console.log(px);
+    $('.image-2').css("top", img2px);
     $('.image').css("top", -px);
+    // $('.image').css("top", );
   }
 
 
@@ -16,7 +29,7 @@ function positionImage() {
 $(document).ready(function(event) {
 
   $("#logOutButton").click(function (event) {
-    $("#logout").submit();
+    $("#logout").submit()
   });
 
 
