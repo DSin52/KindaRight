@@ -188,7 +188,7 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 							    		if (err) {
 							    			next(err);
 							    		} else {
-							    			db.collection("Pictures").insert({"id": fileInfo._id}, next);
+							    			db.collection("Pictures").insert({"id": fileInfo._id, "Creator": req.cookies.loggedIn.Username}, next);
 							    		}
 							    	});
 							    });
@@ -272,7 +272,7 @@ function findAllPictures(db, callback) {
 		}
 		ids = ids.reverse();
 		for (var i = 0; i < ids.length; i++) {
-			imgIds.push("http://localhost:3000/get/repository/" + ids[i].id);
+			imgIds.push("http://localhost:3000/get/repository/" + ids[i].id + "/view/" + ids[i].Creator);
 		}
 		callback(null, imgIds);
 	});
@@ -286,10 +286,16 @@ function findAllPicturesForTag(db, tag, callback) {
 		}
 		else if (acct) {
 			acct.Pictures = acct.Pictures.reverse();
-			for (var i = 0; i < acct.Pictures.length; i++) {
-				imgIds.push("http://localhost:3000/get/repository/" + acct.Pictures[i]);
+			async.eachSeries(acct.Pictures, function (item, next) {
+				console.log("ITEM IS: " + item);
+				db.collection("Pictures").findOne({"id": item}, function (err, act) {
+					imgIds.push("http://localhost:3000/get/repository/" + item + "/view/" + act.Creator);
+					next();
+				});
 			}
-			return callback(null, imgIds);
+			, function (err) {
+				return callback(null, imgIds);
+			});
 		} else {
 			return callback(null, imgIds);
 		}

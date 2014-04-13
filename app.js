@@ -146,7 +146,6 @@ app.get("/main", function (req, res) {
 	      		return res.send(500);
 	      	} else if (req.query && req.query.tag) {
 	      		db.findAllPicturesForTag(_db, req.query.tag, function(err, tagIds){
-	      			console.log(tagIds.length);
 	      			if (err) {
 	      				return res.send(500);
 	      			} else {
@@ -360,7 +359,7 @@ app.get("/repository/:userid/:repository", function (req, res) {
 					tags.push(account.Repositories[req.params.repository].tags[i][j]);
 				}
 			}
-			router.route(req, res, "view_repository", {"Repo": images, "Name": req.params.repository, "Tags": tags});
+			router.route(req, res, "view_repository", {"Repo": images, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid, "Name": req.params.repository, "Tags": tags});
 		}
 	});
 	} else {
@@ -400,10 +399,10 @@ app.get("/:repo_id/messages", function (req, res) {
 	});
 });
 
-app.get("/get/repository/:pictureid/view", function (req, res) {
-	var imageToCritique = req.path.substring(0, req.path.length - 5);
+app.get("/get/repository/:pictureid/view/:userid", function (req, res) {
+	var imageToCritique = req.path.substring(0, req.path.length - 5 - req.params.userid.length);
 	db.getMessages(_db, req, true, function (err, data) {
-		router.route(req, res, "repo_messages", {"Image": imageToCritique, "Messages": data});
+		router.route(req, res, "repo_messages", {"Image": imageToCritique, "Messages": data, "Creator": req.params.userid});
 	});
 });
 
