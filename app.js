@@ -199,7 +199,6 @@ app.post("/create", function (req, res) {
 		"Discipline": req.body.discipline
 	};
 
-	console.log(User.Discipline);
 	fs.readFile(req.files.picture.path, function (err, data) {
 		if (err) {
 			throw err;
@@ -402,7 +401,7 @@ app.get("/:repo_id/messages", function (req, res) {
 app.get("/get/repository/:pictureid/view/:userid", function (req, res) {
 	var imageToCritique = req.path.substring(0, req.path.length - 5 - req.params.userid.length);
 	db.getMessages(_db, req, true, function (err, data) {
-		router.route(req, res, "repo_messages", {"Image": imageToCritique, "Messages": data, "Creator": req.params.userid});
+		router.route(req, res, "repo_messages", {"Image": imageToCritique, "Messages": data, "Creator_Link": "http://localhost:3000/users/" + req.params.userid, "Creator": req.params.userid});
 	});
 });
 
