@@ -339,11 +339,16 @@ p {
 .dark-layer {
 	position: absolute;
 
-	left: 0%;
-	top: 60px;
-	bottom: 0%;
-	right: 30%;
-	background: rgba(0,0,0, .5);
+	left: -10%;
+	top: 0px;
+	bottom: -60px;
+	right: 5%;
+	/*background: rgba(0,0,0, .7);*/
+
+	background: -webkit-radial-gradient(rgba(0,0,0, 0.4) 00%, rgba(0,0,0, 0.8) 50%);
+	background: radial-gradient(rgba(0,0,0, 0.4) 0%, rgba(0,0,0, 0.8) 50%);
+
+
 }
 
 .main-page-thumbnail {

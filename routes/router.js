@@ -20,6 +20,7 @@ function route(req, res, webpage, options, callback)
 	} else if (webpage === "settings") {
 		res.render("settings", options);
 	} else if (webpage === "view_repository") {
+	// } else if (webpage === "music") {
 		res.render("view_repository", options);
 	} else if (webpage === "repo_messages") {
 		res.render("repo_messages", options);
