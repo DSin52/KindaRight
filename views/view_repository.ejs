@@ -9,10 +9,25 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/shapes.css">
     
+    <style>
+		#bg {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			right: 0;
+			left: 0;
+
+			z-index: -1;
+			-webkit-filter: grayscale(.8) blur(20px);
+			background: url('<%= Repo[5] %>');
+			background-size: 100%;
+		}
+    </style>
     
 
   </head>
   <body>
+  <!-- <div id="bg"></div> -->
   
   <!-- NavBar Object -->
 	 <% include includes/navbar.ejs %>
@@ -40,9 +55,11 @@
     </div>
 	<div class="page">
 		<% if (Repo.length) { %>
+
 		<!-- SCREEN FOR LARGE RESOLUTIONS -->
 		  <div id="_repos" class="visible-lg visible-md">
 		    <% 
+		    	
 		    	var one = new Array();
 		    	var two = new Array();
 		    	var three = new Array();
@@ -61,6 +78,9 @@
 
 		    		i = (i + 1) % 4;
 		    	})
+
+		    	
+
 		    %>
 
 			    	
