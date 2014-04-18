@@ -162,7 +162,7 @@ a {
 
 .cloudcc {
   position:absolute;
-  background: #f00 url('/images/clouds.png') repeat;
+  background: rgba(0,0,0,.5) url("../images/texture-bg-translucent.jpg") repeat;
   background-size: 100%;
   top: -50%;
   bottom: -50%;
@@ -171,9 +171,12 @@ a {
   opacity: 1;
 
   
-  -webkit-transition: opacity 10s;
+  -webkit-transition: background 10s;
   -webkit-filter: blur(20px);
 
+}
+.cloudcc:hover {
+  background: rgba(120,120,120,.5) url("../images/texture-bg-translucent.jpg") repeat;
 }
 
 
@@ -194,9 +197,7 @@ a {
 
 }
 
-.cloudcc:hover {
-  opacity: 0
-}
+
 
 
 

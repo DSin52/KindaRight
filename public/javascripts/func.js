@@ -1,6 +1,6 @@
 $(window).load(function() {
 	var index = 0;
-	$('body').click(function() {
+	$('.mask').click(function() {
 
 		var pos = $(window).scrollTop();
 		console.log()
