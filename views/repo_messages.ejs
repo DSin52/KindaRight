@@ -50,6 +50,7 @@
     		text-align: center;
     		max-width: 100%;
     		max-height: 100%;
+    		opacity: 0;
 
        	}
 
@@ -81,12 +82,15 @@
 	  			</div>
 	  		</div>
 	  	</div>
-	  	
+
 	  	<div class="comment-container">
+
 	  		<div id="chatPanel" class="ui-widget-content">
-				
+        <h3>
+          Picture By: <a href=<%=Creator_Link%>><%=Creator%></a>
+          Repository: <a href=<%=Repository_Link%>><%=Repository%></a>
+        </h3>
 				<div id="messages"></div>
-				
 				<textarea class="form-control" id="chat_message" placeholder="Enter message here"></textarea>
 				<button type="submit" class="btn btn-success" id="message_submit">Add Comment</button>
 		
@@ -103,9 +107,9 @@
   <!-- Script References -->
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-  <script src="../../../ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
-  <script src="../../../js/jquery.cookie.js"></script>
-  <script type="text/javascript" src="../../../javascripts/main.js"></script> 
+  <script src="../../../../ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+  <script src="../../../../js/jquery.cookie.js"></script>
+  <script type="text/javascript" src="../../../../javascripts/main.js"></script> 
   <!-- End Script References -->
   </body>
 </html>

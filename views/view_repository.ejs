@@ -39,6 +39,9 @@
 		<h1>
   			<%=Name%>
   		</h1>
+  		<h2>
+  			By <a href=<%=Creator_Link%>><%= Creator%></a>
+  		</h2>
   			
 		<div class="inline">
   			<button type="submit" class="btn btn-success" data-toggle="modal" 
@@ -76,6 +79,25 @@
 		    		i = (i + 1) % 4;
 		    	})
 
+		    	var one_link = new Array();
+		    	var two_link = new Array();
+		    	var three_link = new Array();
+		    	var four_link = new Array();
+		    	var o_link = 0, t_link = 0, th_link = 0, f_link = 0, i_link = 0;
+		   		var name_link = null;
+		    	Links.forEach(function(n_link){ 
+		    		if ( i_link == 0)
+		    			one_link[o_link++] = n_link;
+		    		if ( i_link == 1)
+		    			two_link[t_link++] = n_link;
+		    		if ( i_link == 2)
+		    			three_link[th_link++] = n_link;
+		    		if ( i_link == 3)
+		    			four_link[f_link++] = n_link;
+
+		    		i_link = (i_link + 1) % 4;
+		    	})
+
 		    	
 
 		    %>
@@ -84,7 +106,7 @@
 					<div class="picture-column inline" >
 						<% for (var index = 0; index < one.length; index++) { %>
 							<div class="picture inline relative full-width">
-						    	<a href=<%=one[index % one.length] + "/view"%>>
+						    	<a href=<%=one_link[index % one_link.length]%>>
 							      	<div class="pictures-overlay"></div>
 								    <div class="inline full-width">
 						    			<img src=<%= one[index % one.length]%> width="100%" >
@@ -96,7 +118,7 @@
 					<div class="picture-column inline">
 						<% for (var index = 0; index < two.length; index++) { %>
 							<div class="picture inline relative full-width">
-						    	<a href=<%=two[index % two.length] + "/view"%>>
+						    	<a href=<%=two_link[index % two_link.length]%>>
 							      	<div class="pictures-overlay"></div>
 								    <div class="inline full-width">
 						    			<img src=<%= two[index % two.length]%> width="100%" >
@@ -108,7 +130,7 @@
 					<div class="picture-column inline">
 						<% for (var index = 0; index < three.length; index++) { %>
 							<div class="picture inline relative full-width">
-						    	<a href=<%=three[index % three.length] + "/view"%>>
+						    	<a href=<%=three_link[index % three_link.length]%>>
 							      	<div class="pictures-overlay"></div>
 								    <div class="inline full-width">
 						    			<img src=<%= three[index % three.length]%> width="100%" >
@@ -120,7 +142,7 @@
 					<div class="picture-column inline" >
 						<% for (var index = 0; index < four.length; index++) { %>
 							<div class="picture inline relative full-width">
-						    	<a href=<%=four[index % four.length] + "/view"%>>
+						    	<a href=<%=four_link[index % four_link.length]%>>
 							      	<div class="pictures-overlay full-width"></div>
 								    <div class="inline full-width">
 						    			<img src=<%= four[index % four.length]%> width="100%" >

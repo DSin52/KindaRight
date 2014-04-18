@@ -10,9 +10,28 @@
     
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
+    <style>
+      
+      .faded-main-bg {
+        position: fixed;
+        z-index: -10;
+        top: 0;
+        left: 0;
+        min-height: 100%;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+
+        background: url('<%= Pictures[0] %>') repeat center center fixed;
+        background-repeat: repeat;
+        -webkit-filter: grayscale(.9) blur(50px) opacity(.5); 
+        filter: grayscale(.9) blur(100px);
+      }
+    </style>
   </head>
   <body>
-
+    
+    <div class="faded-main-bg"></div>
   	
   
     <!-- NavBar Object -->
@@ -31,17 +50,17 @@
               </div>
             </div>
       </form>
-        <div class="fluid-container" id="community">
+           <div class="fluid-container" id="community">
+        <% if (Search) { %>
          <% if (Tags.length) { %>
-          <% Tags.forEach(function(name){ %>
-            <a href=<%= name + "/view"%>>
-                  <!-- <div class="pictures-overlay"></div>
-                <div class="inline"> -->
-                  <img src=<%=name%> height="150" >
-                <!-- </div> -->
-                </a>
-          <% }) %>
+         <% for(var i = 0; i < Tags.length; i++) { %>
+          <a href=<%=Message_Ids[i]%>>
+          <img src=<%=Tags[i]%> height="150" >
+          <% } %>
+        <% } else { %>
+         <p>No Content under that tag found!</p>
         <% } %>
+        <% }%>
         </div>
       
       <h3>
@@ -67,13 +86,32 @@
 
             i = (i + 1) % 4;
           })
+
+          var one_link = new Array();
+          var two_link = new Array();
+          var three_link = new Array();
+          var four_link = new Array();
+          var o_link = 0, t_link = 0, th_link = 0, f_link = 0, i_link = 0;
+          var name_link = null;
+          Message_Ids.forEach(function(n_link){ 
+            if ( i_link == 0)
+              one_link[o_link++] = n_link;
+            if ( i_link == 1)
+              two_link[t_link++] = n_link;
+            if ( i_link == 2)
+              three_link[th_link++] = n_link;
+            if ( i_link == 3)
+              four_link[f_link++] = n_link;
+
+            i_link = (i_link + 1) % 4;
+          })
+
         %>
 
-            
           <div class="picture-column inline" >
             <% for (var index = 0; index < one.length; index++) { %>
               <div class="picture inline relative full-width">
-                  <a href=<%=one[index % one.length] + "/view"%>>
+                  <a href=<%=one_link[index % one_link.length]%>>
                       <div class="pictures-overlay"></div>
                     <div class="inline full-width">
                       <img src=<%= one[index % one.length]%> width="100%" >
@@ -85,7 +123,7 @@
           <div class="picture-column inline">
             <% for (var index = 0; index < two.length; index++) { %>
               <div class="picture inline relative full-width">
-                  <a href=<%=two[index % two.length] + "/view"%>>
+                  <a href=<%=two_link[index % two_link.length]%>>
                       <div class="pictures-overlay"></div>
                     <div class="inline full-width">
                       <img src=<%= two[index % two.length]%> width="100%" >
@@ -97,7 +135,7 @@
           <div class="picture-column inline">
             <% for (var index = 0; index < three.length; index++) { %>
               <div class="picture inline relative full-width">
-                  <a href=<%=three[index % three.length] + "/view"%>>
+                  <a href=<%=three_link[index % three_link.length]%>>
                       <div class="pictures-overlay"></div>
                     <div class="inline full-width">
                       <img src=<%= three[index % three.length]%> width="100%" >
@@ -109,7 +147,7 @@
           <div class="picture-column inline" >
             <% for (var index = 0; index < four.length; index++) { %>
               <div class="picture inline relative full-width">
-                  <a href=<%=four[index % four.length] + "/view"%>>
+                  <a href=<%=four_link[index % four_link.length]%>>
                       <div class="pictures-overlay full-width"></div>
                     <div class="inline full-width">
                       <img src=<%= four[index % four.length]%> width="100%" >
