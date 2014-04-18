@@ -193,19 +193,32 @@ body {
 }
 
 
-.cloudcc {
+.first {
   z-index: -11;
   position:absolute;
-  background: rgba(0,0,0,1) url("../images/music-bg.jpg") repeat;
-  background-size: 100%;
+  background: rgba(150, 0, 150, .5);
   opacity: 1;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 
+  -webkit-transition: background 10s;
+  /*-webkit-filter: blur(20px);*/
+
+}
+
+.second {
+  z-index: -11;
+  position:absolute;
+  background: rgba(0, 0, 115, .5);
+  opacity: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   
-  /*-webkit-transition: background 2s;*/
+  -webkit-transition: background 10s;
   /*-webkit-filter: blur(20px);*/
 
 }
