@@ -83,7 +83,7 @@ if ("development" == app.get("env")) {
 
 app.get("/", function (req, res) {
 	if (req.cookies.loggedIn) {
-		db.findAllPictures(_db, function (err, ids) {
+		db.findAllPictures(_db, function (err, ids, msgIds) {
       	if (err) {
       		return res.send(500);
       	}
@@ -94,7 +94,9 @@ app.get("/", function (req, res) {
       	 	"Last_Name": req.cookies.loggedIn.Last_Name,
       	 	"Username": req.cookies.loggedIn.Username,
       	 	"Pictures" : ids,
-      	 	"Tags": ""
+      	 	"Tags": "",
+      	 	"Search": false,
+      	 	"Message_Ids": msgIds
       	});
       });
 	} else {
@@ -121,7 +123,7 @@ app.post("/main", function(req, res, next) {
       var minute = 500000;
       res.cookie("loggedIn", {"Username": user.Username, "Email": user.Email, 
       	"First_Name": user.First_Name, "Last_Name": user.Last_Name}, {"maxAge": minute});
-      db.findAllPictures(_db, function (err, ids) {
+      db.findAllPictures(_db, function (err, ids, msgIds) {
       	if (err) {
       		return res.send(500);
       	}
@@ -132,7 +134,9 @@ app.post("/main", function(req, res, next) {
       	 	"Last_Name": user.Last_Name,
       	 	"Username": user.Username,
       	 	"Pictures" : ids,
-      	 	"Tags": ""
+      	 	"Tags": "",
+      	 	"Search": false,
+      	 	"Message_Ids": msgIds
       	});
       });
     });
@@ -141,23 +145,39 @@ app.post("/main", function(req, res, next) {
 
 app.get("/main", function (req, res) {
 	if (req.cookies.loggedIn) {
-		db.findAllPictures(_db, function (err, ids) {
+		db.findAllPictures(_db, function (err, ids, msgIds) {
 	      	if (err) {
 	      		return res.send(500);
 	      	} else if (req.query && req.query.tag) {
-	      		db.findAllPicturesForTag(_db, req.query.tag, function(err, tagIds){
+	      		db.findAllPicturesForTag(_db, req.query.tag, function(err, tagIds, msg_Ids){
 	      			if (err) {
 	      				return res.send(500);
 	      			} else {
-	      				return router.route(req, res, "main", 
-						{
-							"Username": req.cookies.loggedIn.Username, 
-							"Email": req.cookies.loggedIn.Email, 
-							"First_Name": req.cookies.loggedIn.First_Name, 
-							"Last_Name": req.cookies.loggedIn.Last_Name,
-							"Pictures": ids,
-							"Tags": tagIds
-						});
+	      				if (tagIds.length > 0) {
+	      					return router.route(req, res, "main", 
+							{
+								"Username": req.cookies.loggedIn.Username, 
+								"Email": req.cookies.loggedIn.Email, 
+								"First_Name": req.cookies.loggedIn.First_Name, 
+								"Last_Name": req.cookies.loggedIn.Last_Name,
+								"Pictures": ids,
+								"Tags": tagIds,
+								"Search": true,
+								"Message_Ids": msg_Ids
+							});
+	      				} else {
+	      					return router.route(req, res, "main", 
+							{
+								"Username": req.cookies.loggedIn.Username, 
+								"Email": req.cookies.loggedIn.Email, 
+								"First_Name": req.cookies.loggedIn.First_Name, 
+								"Last_Name": req.cookies.loggedIn.Last_Name,
+								"Pictures": ids,
+								"Tags": "",
+								"Search": true,
+								"Message_Ids": msgIds
+							});
+	      				}
 	      			}
 	      		});	      	
 	      	} else {
@@ -168,7 +188,9 @@ app.get("/main", function (req, res) {
 					"First_Name": req.cookies.loggedIn.First_Name, 
 					"Last_Name": req.cookies.loggedIn.Last_Name,
 					"Pictures": ids,
-					"Tags": ""
+					"Tags": "",
+					"Search": false,
+					"Message_Ids": msgIds
 				});
 	      	}
 		});
@@ -199,7 +221,6 @@ app.post("/create", function (req, res) {
 		"Discipline": req.body.discipline
 	};
 
-	console.log(User.Discipline);
 	fs.readFile(req.files.picture.path, function (err, data) {
 		if (err) {
 			throw err;
@@ -261,7 +282,7 @@ app.get("/users/:userid", function (req, res) {
 				repositories.push(key);
 			}
 			
-			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
+			var imgPath = "http://localhost:3000/profile/" + account.Profile_Picture;
 			router.route(req, res, "user", 
 				{					
 					"Profile_Picture": imgPath, 
@@ -279,10 +300,10 @@ app.get("/users/:userid", function (req, res) {
 	}
 });
 
-app.get("/users/picture/:pictureid", function (req, res) {
+app.get("/profile/:profile_picture_id", function (req, res) {
 	if (req.cookies.loggedIn) {
 		var grid = new Grid(_db, 'Profile_Pictures');  
-		grid.get(new ObjectID(req.params.pictureid), function (err, data) {
+		grid.get(new ObjectID(req.params.profile_picture_id), function (err, data) {
 			if (err) {
 				res.send(500, {Error: "Error in finding picture"});
 			} else {
@@ -297,21 +318,12 @@ app.get("/users/picture/:pictureid", function (req, res) {
 	}
 });
 
-app.get("/settings/:userid", function (req, res) {
-	if (req.cookies.loggedIn) {
-		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
-			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
-			router.route(req, res, "settings", {"Profile_Picture": imgPath, 
-				"Username": account.Username, "First_Name": account.First_Name, 
-				"Last_Name": account.Last_Name});
-		});	
-	} else {
-		res.redirect("/");
-	}
-});
-
 app.get("/repository/create/:userid", function (req, res) {
-	res.render("repository");
+	if (req.cookies.loggedIn && req.cookies.loggedIn.Username === req.params.userid) {
+		res.render("repository");
+	} else {
+		return res.send(401, "You are not authorized!");
+	}
 });
 
 app.post("/repository", function (req, res) {
@@ -341,33 +353,7 @@ app.post("/repository", function (req, res) {
 		}
 });
 
-app.get("/repository/:userid/:repository", function (req, res) {
-	if (req.cookies.loggedIn) {
-		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
-		if (err) {
-			res.send(500, {"Error": err});
-		} else if (!account) {
-			res.send(404, {"Error": "User not found!"});
-		} else {
-			var images = [];
-			var tags = [];
-			for (var i = 0; i < account.Repositories[req.params.repository].Pictures.length; i++) {
-				images[i] = "http://localhost:3000/get/repository/" + account.Repositories[req.params.repository].Pictures[i];
-			}
-			for (var i = 0; i < account.Repositories[req.params.repository].tags.length; i++) {
-				for (var j = 0; j < account.Repositories[req.params.repository].tags[i].length; j++) {
-					tags.push(account.Repositories[req.params.repository].tags[i][j]);
-				}
-			}
-			router.route(req, res, "view_repository", {"Repo": images, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid, "Name": req.params.repository, "Tags": tags});
-		}
-	});
-	} else {
-		return res.redirect("/");
-	}
-});
-
-app.get("/get/repository/:pictureid", function (req, res) {
+app.get("/repository/content/:userid/:pictureid", function (req, res) {
 	var grid = new Grid(_db, 'Repositories');  
 		grid.get(new ObjectID(req.params.pictureid), function (err, data) {
 			if (err) {
@@ -378,6 +364,79 @@ app.get("/get/repository/:pictureid", function (req, res) {
 				res.end();
 			}
 		});
+});
+
+app.get("/repository/view/:userid/:pictureid", function (req, res) {
+	db.getMessages(_db, req, function (err, data) {
+		if (err) {
+			console.log(err);
+			return res.send(404);
+		}
+		router.route(req, res, "repo_messages", {"Image": "http://localhost:3000/repository/content/"
+			+ req.params.userid + "/" + req.params.pictureid, "Messages": data, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid});
+	});
+});
+
+app.get("/repository/:userid/:repository", function (req, res) {
+	if (req.cookies.loggedIn) {
+		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+		if (err) {
+			res.send(500, {"Error": err});
+		} else if (!account) {
+			res.send(404, {"Error": "User not found!"});
+		} else {
+			var images = [];
+			var tags = [];
+			var links = [];
+			for (var i = 0; i < account.Repositories[req.params.repository].Pictures.length; i++) {
+				images[i] = "http://localhost:3000/repository/content/" + req.params.userid + "/" + account.Repositories[req.params.repository].Pictures[i];
+				links[i] = "http://localhost:3000/repository/view/" + req.params.userid 
+					+ "/" + account.Repositories[req.params.repository].Pictures[i];
+			}
+
+			for (var i = 0; i < account.Repositories[req.params.repository].tags.length; i++) {
+				for (var j = 0; j < account.Repositories[req.params.repository].tags[i].length; j++) {
+					tags.push(account.Repositories[req.params.repository].tags[i][j]);
+				}
+			}
+			router.route(req, res, "view_repository", 
+				{
+					"Repo": images, 
+					"Creator": req.params.userid, 
+					"Creator_Link": "http://localhost:3000/users/" + req.params.userid, 
+					"Name": req.params.repository, 
+					"Tags": tags,
+					"Links": links
+				}
+			);
+		}
+	});
+	} else {
+		return res.redirect("/");
+	}
+});
+
+app.post("/:picture_id/messages", function (req, res) {
+	db.addMessage(_db, req, function (err, data) {
+		if (err) {
+			return console.log(err);
+		}
+		res.send(200);
+	});
+});
+
+/*
+app.get("/settings/:userid", function (req, res) {
+	if (req.cookies.loggedIn) {
+		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+			var imgPath = "http://localhost:3000/users/picture/" + account.Profile_Picture;
+			router.route(req, res, "settings", {"Profile_Picture": imgPath, 
+				"Username": account.Username, "First_Name": account.First_Name, 
+				"Last_Name": account.Last_Name});
+		});	
+	} else {
+		res.redirect("/");
+	}
 });
 
 app.post("/:repo_id/messages", function (req, res) {
@@ -419,6 +478,7 @@ app.get("/get/repository/:pictureid/view/:userid", function (req, res) {
 // 		res.redirect("/");
 // 	}
 // });
+*/
 
 //starts the server
 app.listen(app.get("port"), function() {

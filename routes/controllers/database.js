@@ -209,7 +209,7 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 			    	var tags = req.body.tags.split(",");
 					findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", function (err) {
 						addTags(db, tags, fileInfo._id, function (err) {
-							db.collection("Pictures").insert({"id": fileInfo._id}, callback);
+							db.collection("Pictures").insert({"id": fileInfo._id, "Creator": req.cookies.loggedIn.Username}, callback);
 						});
 					});
 		  		});
@@ -247,39 +247,39 @@ function addMessage(db, req, callback) {
 	});
 }
 
-function getMessages(db, req, initial, callback) {
-	var idToFind;
-	if (!initial) {
-		idToFind = req.path.substring(1, 25);
-	} else {
-		idToFind = req.path.substring(16, 40);
-	}
+function getMessages(db, req, callback) {
 	db.collection("Messages").findOne({
-		"id": idToFind
-	}, function (err, image) {
-		if (!image) {
-			return callback("Image not found!");
+		"id": req.params.pictureid
+	}, function (err, msg) {
+		if (err) {
+			return callback("Content not found!");
 		}
-		callback(null, image.Messages);
+		if (!msg) {
+			return callback(null, {});
+		}
+		callback(null, msg.Messages);
 	});
 }
 
 function findAllPictures(db, callback) {
 	var imgIds = [];
+	var msgIds = [];
 	db.collection("Pictures").find().toArray(function (err, ids) {
 		if (err) {
 			return callback(err);
 		}
 		ids = ids.reverse();
 		for (var i = 0; i < ids.length; i++) {
-			imgIds.push("http://localhost:3000/get/repository/" + ids[i].id + "/view/" + ids[i].Creator);
+			imgIds.push("http://localhost:3000/repository/content/"  + ids[i].Creator  + "/" + ids[i].id);
+			msgIds.push("http://localhost:3000/repository/view/" + ids[i].Creator + "/" + ids[i].id);
 		}
-		callback(null, imgIds);
+		callback(null, imgIds, msgIds);
 	});
 }
 
 function findAllPicturesForTag(db, tag, callback) {
 	var imgIds = [];
+	var msgIds = [];
 	db.collection("Tags").findOne({"Tag": tag}, function (err, acct) {
 		if (err) {
 			return callback(err);
@@ -287,17 +287,17 @@ function findAllPicturesForTag(db, tag, callback) {
 		else if (acct) {
 			acct.Pictures = acct.Pictures.reverse();
 			async.eachSeries(acct.Pictures, function (item, next) {
-				console.log("ITEM IS: " + item);
 				db.collection("Pictures").findOne({"id": item}, function (err, act) {
-					imgIds.push("http://localhost:3000/get/repository/" + item + "/view/" + act.Creator);
+					imgIds.push("http://localhost:3000/repository/content/" + act.Creator  + "/" + item);
+					msgIds.push("http://localhost:3000/repository/view/" + act.Creator + "/" + item);
 					next();
 				});
 			}
 			, function (err) {
-				return callback(null, imgIds);
+				return callback(null, imgIds, msgIds);
 			});
 		} else {
-			return callback(null, imgIds);
+			return callback(null, imgIds, msgIds);
 		}
 	});
 }

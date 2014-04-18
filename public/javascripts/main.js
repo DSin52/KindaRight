@@ -67,10 +67,9 @@ $(document).ready(function(event) {
       };  
 
   $("#message_submit").click(function (event) {
-      var pathToSubmitTo = window.location.pathname.substring(16, 40);
-      console.log(pathToSubmitTo);
+      var pathToSubmitTo = window.location.pathname.substring(window.location.pathname.length - 24);
       var message = $("#chat_message").val();
-      $.post("/" + pathToSubmitTo + "/messages", {"id": pathToSubmitTo, 
+      $.post("http://localhost:3000/" + pathToSubmitTo + "/messages", {"id": pathToSubmitTo, 
         "Username": JSON.parse($.cookie().loggedIn.substring(2)).Username, "Message": message}, function (data) {
           location.reload();
       });
