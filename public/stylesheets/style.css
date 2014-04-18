@@ -372,6 +372,10 @@ p {
 
 }
 
+.link {
+	color: #b0F;
+}
+
 
 .content-area {
 position: absolute;
@@ -395,13 +399,13 @@ background-size: 100% 100%;
 top: 0%;
 }
 #one {
-background: url("/images/mask.png") bottom center;
+background: url("/images/mask.png") center;
 background-size: 100% 100%;
 border: #000 solid 50px;
 }
 
 #two {
-background: url("/images/slide2.png") center;
+background: url("/images/slide2.png") top;
 background-size: 100%;
 }
 #three {
@@ -409,7 +413,7 @@ background-size: 100%;
 	background: url("/images/slide3.png") no-repeat center;
 	background-size: 100%;
 	min-height: 100%;
-	height: 1000px;
+	height: 100%;
 	padding: 15%;
 
 }
