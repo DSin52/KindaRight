@@ -9,6 +9,58 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/style.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/shapes.css">
     
+    <style>
+      
+
+      body {
+        /*position: absolute;
+        top: 0;
+        bottom: 0;*/
+
+        background: url('/images/bg.jpg') fixed;
+        margin: 0 auto;
+        border: 0;
+        padding: 0;
+        background-size: 100%;
+        
+      }
+      .content-area {
+        position: absolute;
+        top: 50px;
+        bottom: 0;
+      }
+      .mask {
+        position: relative;
+        height: 100%;
+        min-height: 100%;
+        background: url("/images/mask.png") bottom;
+        background-size: 100%;
+
+        -webkit-transition: top 1s linear;
+        /*-webkit-transition: background 1s linear;*/
+      }
+
+      #intro {
+        background: url("/images/intro.jpg") no-repeat center;
+        background-size: 100% 100%;
+        top: 0%;
+      }
+      #one {
+        background: url("/images/mask.png") bottom;
+        background-size: 100% 100%;
+        border: #000 solid 50px;
+      }
+
+      #two {
+        background: url("/images/slide2.png") center;
+        background-size: 100%;
+      }
+      #three {
+        background: url("/images/slide3.png") center;
+        background-size: 100%;
+      }
+    </style>
+
     <% include includes/head_common.ejs %>
   </head>
   <body>
@@ -134,119 +186,12 @@
     </div>
   </div>
   <!-- End Create Modal -->
+  
+  <div class="mask" id="intro"></div>
+  <div class="mask" id="one"></div>
+  <div class="mask" id="two"></div>
+  <div class="mask" id="three"></div>
 
-  <!-- SWEET PURPLE DIAMOND!! -->
-  <!-- <div class="visible-lg">
-    <div class="page head">
-      <div id="diamond">
-        <div id="site_text" class="text">
-          <h3 class="center-text">
-            Welcome to <logo>KindaRight</logo>. <br />
-            Your next favorite work of<br />
-            art awaits <br />
-            you.
-          </h3>
-        </div>
-      </div>
-      <div id="patron_text"  class="text">
-        <P>
-            Patrons are the <br />artist's customers<br />
-            Now, find great art <br />around the world. <br />
-            <z class="light-accent">Commission</z> great works. <br />
-            <z class="light-accent">Buy</z> amazing art. <br />
-            <z class="light-accent">Hire</z> your favorite artist.
-        </P>
-        <h1>PATRON</h1>
-      </div>
-      <div id="artist_text"  class="text">
-        <p>
-          Expand and collaborate<br />
-          with artists aroundd the <br />
-          world, or around the block
-        </p>
-        <h1>ARTIST</h1>
-      </div>
-    </div>
-  </div>
-  <div class="hidden-lg">
-    <div class="page head">
-      <h2>Hello, Welcome to KindaRight</h2>
-      <p class="Justify">
-        This is the best site to connect and collaborate with artists of all disciplines.
-      </p>
-      <h2>Artists</h2>
-      <p class="justify">
-        Expand and collaborate with artists around the world, or around the block.
-      </p>
-
-      <h2>Patron</h2>
-      <p class="justify">
-        Patrons are the artist's customers. Now, find great art around the world and commision great works, buy amazing art, and hire your favorite artists
-      </p>
-    </div>
-  </div> -->
-
-  <div class="header page">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <h1>
-            Let us turn the page, <br />
-            Let us change the way artists work.
-          </h1>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <h2>
-            PATRON
-          </h2>
-          <P class="justify">
-            Personalized features for those who want to buy art and hire artists. <br />
-            Integrated into the same network as artists to facilitate communication. <br />
-          </P>
-        </div>
-        <div class="col-md-6 center-text">
-          <h2>
-            ARTIST
-          </h2>
-          <P class="justify">
-            One location for artists of all disciplines. <br />
-            Collaborate online or in person. <br />
-            Filter for any sort of art or artist you wish to find. <br />
-          </P>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- NETWORKING SECTION -->
-  <div class="page gradient-bg">
-    <h1>What Can I do here?</h1>
-
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Networking</h2>
-          <p class="Justify">
-            Expand your network like never before. With the ability to communicate to all artists and all patrons in a single location. Kinda Right offers unprecedented access to how you create, expand, and maintain your network.
-          </p>
-        </div>
-        <div class="col-md-4">
-          <h2>Collaboration</h2>
-          <p class="Justify">
-            Work with people online to create new and exciting things with people around the world, or around the block with by searching and filtering artists by discipline and location. Allowing you to see the poeple in your own area who are creative.
-          </p>
-        </div>
-        <div class="col-md-4">
-          <h2>Merit</h2>
-          <p class="Justify">
-            Advance your standing through your work. Tell us who you want to see more of by voting for their work, and build your  reputation among artists who want to work with you and patrons who want to buy your work and hire your services.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <div class="footer">
     <p class="fine-print center-text">
@@ -262,8 +207,8 @@
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
   <script src="ui.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
-  <script type="text/javascript" src="/javascripts/home.js"></script>
-
+  <script type="text/javascript" src="/javascripts/func.js"></script>
+  
   <!-- End Script References -->
 
   </body>
