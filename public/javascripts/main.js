@@ -23,6 +23,8 @@ function positionImage() {
     // $('.image').css("top", );
   }
 
+  $('.image').css('opacity', '1');
+
 
 };
 
