@@ -133,7 +133,7 @@ p {
 	min-height: 30%;
 	/*max-height: 50%;*/
 
-	/*background: url("../images/wood-bg.jpg") fixed center center;*/
+	background: url("../images/texture-bg.jpg") repeat;
 }
 
 .gradient-bg {
