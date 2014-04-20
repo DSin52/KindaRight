@@ -373,6 +373,42 @@ p {
 }
 
 
+.content-area {
+position: absolute;
+top: 50px;
+bottom: 0;
+}
+.mask {
+position: relative;
+height: 100%;
+min-height: 100%;
+background: url("/images/mask.png") bottom;
+background-size: 100%;
+
+-webkit-transition: top 1s linear;
+/*-webkit-transition: background 1s linear;*/
+}
+
+#intro {
+background: url("/images/intro.jpg") no-repeat center;
+background-size: 100% 100%;
+top: 0%;
+}
+#one {
+background: url("/images/mask.png") bottom center;
+background-size: 100% 100%;
+border: #000 solid 50px;
+}
+
+#two {
+background: url("/images/slide2.png") center;
+background-size: 100%;
+}
+#three {
+background: url("/images/slide3.png") center;
+background-size: 100%;
+}
+
 #loginButton {
 	padding-left: 15px;
 }
