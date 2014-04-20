@@ -112,9 +112,9 @@ p {
 
 .texture-bg {
 	background: rgba(0,0,0,.5) url("../images/texture-bg-translucent.jpg") repeat;
-
-
 }
+
+
 
 .page {
 	position: relative;
@@ -124,14 +124,18 @@ p {
 	
 	background: #000;
 	padding: 10px;
+	padding-left: 2%;
+	padding-right: 2%;
 	margin-top: 0;
-	margin-left: 15%;
-	margin-right: 15%;
+	margin-left: 14%;
+	margin-right: 14%;
 }
 
 .dark-head {
 	min-height: 30%;
-	
+	margin: 0;
+	padding-left: 17%;
+	padding-right: 17%;
 	padding-top: 80px;
 	background: #006;
 }

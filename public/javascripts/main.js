@@ -35,6 +35,12 @@ $(document).ready(function(event) {
   });
 
 
+  //get a good height reading
+  var _docHeight = (document.height !== undefined) ? document.height : document.body.offsetHeight;
+  console.log($(document).height());
+  $(".faded-main-bg").css('height', $('html').offset().bottom);
+
+
   // console.log($('#actual-content').css('height'));
   // $('#actual-content').css("max-width", $(".image-container").css.width());
   // $('#actual-content').css("max-height", $(".image-container").css.height());
