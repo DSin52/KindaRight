@@ -271,7 +271,7 @@ function findAllPictures(db, callback) {
 		ids = ids.reverse();
 		for (var i = 0; i < ids.length; i++) {
 			imgIds.push("http://localhost:3000/repository/content/"  + ids[i].Creator  + "/" + ids[i].id);
-			msgIds.push("http://localhost:3000/repository/view/" + ids[i].Creator + "/" + ids[i].id);
+			msgIds.push("http://localhost:3000/repository/" + ids[i].Creator + "/" + ids[i].Repository + "/" + ids[i].id);
 		}
 		callback(null, imgIds, msgIds);
 	});
@@ -289,7 +289,7 @@ function findAllPicturesForTag(db, tag, callback) {
 			async.eachSeries(acct.Pictures, function (item, next) {
 				db.collection("Pictures").findOne({"id": item}, function (err, act) {
 					imgIds.push("http://localhost:3000/repository/content/" + act.Creator  + "/" + item);
-					msgIds.push("http://localhost:3000/repository/view/" + act.Creator + "/" + item);
+					msgIds.push("http://localhost:3000/repository/" + act.Creator + "/" + act.Repository + "/" + act.id);
 					next();
 				});
 			}

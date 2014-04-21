@@ -398,7 +398,7 @@ app.get("/repository/:userid/:repository/:pictureid", function (req, res) {
 							return res.send(404);
 						}
 						router.route(req, res, "repo_messages", {"Image": "http://localhost:3000/repository/content/"
-							+ req.params.userid + "/" + req.params.pictureid, "Messages": data, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid});
+							+ req.params.userid + "/" + req.params.pictureid, "Messages": data, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid, "Repository": req.params.repository, "Repository_Link": "http://localhost:3000/repository/" + req.params.userid + "/" + req.params.repository});
 					});
 				} else {
 					res.send(404, {"Error": "Picture does not exist"});
