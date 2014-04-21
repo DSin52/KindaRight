@@ -188,7 +188,7 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 							    		if (err) {
 							    			next(err);
 							    		} else {
-							    			db.collection("Pictures").insert({"id": fileInfo._id, "Creator": req.cookies.loggedIn.Username}, next);
+							    			db.collection("Pictures").insert({"id": fileInfo._id, "Creator": req.cookies.loggedIn.Username, "Repository": req.body.repo_name}, next);
 							    		}
 							    	});
 							    });
@@ -209,7 +209,7 @@ function useGridFS(db, req, fileName, gridName, isArray, callback) {
 			    	var tags = req.body.tags.split(",");
 					findAndModifyRepo(db, {"Username": req.cookies.loggedIn.Username}, req.body.repo_name, fileInfo._id, ".Pictures", function (err) {
 						addTags(db, tags, fileInfo._id, function (err) {
-							db.collection("Pictures").insert({"id": fileInfo._id, "Creator": req.cookies.loggedIn.Username}, callback);
+							db.collection("Pictures").insert({"id": fileInfo._id, "Creator": req.cookies.loggedIn.Username, "Repository": req.body.repo_name}, callback);
 						});
 					});
 		  		});
