@@ -156,76 +156,56 @@
   <div class="mask" id="intro"></div>
   <div class="mask" id="one"></div>
   <div class="mask" id="two"></div>
-  <div class="mask" id="three"></div>
+  <div class="mask" id="three">
 
-  <div class="fluid-container" id="suggestions">
+    <div class="fluid-container" id="suggestions">
+
         <% 
-          var one = new Array();
-          var two = new Array();
-          var three = new Array();
-          var four = new Array();
+
+          var arr  = new Array();
+          arr[0] = new Array();
+          arr[1] = new Array();
+          arr[2] = new Array();
+          arr[3] = new Array();
+          
           var o = 0, t = 0, th = 0, f = 0, i = 0;
-          var name = null;
           Pictures.forEach(function(n){ 
             if ( i == 0)
-              one[o++] = n;
+              arr[0][o++] = n;
             if ( i == 1)
-              two[t++] = n;
+              arr[1][t++] = n;
             if ( i == 2)
-              three[th++] = n;
+              arr[2][th++] = n;
             if ( i == 3)
-              four[f++] = n;
+              arr[3][f++] = n;
 
             i = (i + 1) % 4;
           })
-        %>
 
+          for (var ind = 0; ind < arr.length; ind++) {
+        %>
           <div class="picture-column inline" >
-            <% for (var index = 0; index < one.length; index++) { %>
+            <% 
+              var breaker = 0
+              for (var index = 0; index < arr[ind].length; index++) { 
+                if (breaker++ == 3)
+                  break;
+            %>
               <div class="picture inline relative full-width">
-                      <div class="pictures-overlay"></div>
+                    <div class="pictures-overlay"></div>
                     <div class="inline full-width">
-                      <img src=<%= one[index % one.length]%> width="100%" >
-                    </div>
-                  </a>
-                </div>
-            <% } %>
-          </div>
-          <div class="picture-column inline">
-            <% for (var index = 0; index < two.length; index++) { %>
-              <div class="picture inline relative full-width">
-                      <div class="pictures-overlay"></div>
-                    <div class="inline full-width">
-                      <img src=<%= two[index % two.length]%> width="100%" >
-                    </div>
-                  </a>
-                </div>
-            <% } %>
-          </div>
-          <div class="picture-column inline">
-            <% for (var index = 0; index < three.length; index++) { %>
-              <div class="picture inline relative full-width">
-                      <div class="pictures-overlay"></div>
-                    <div class="inline full-width">
-                      <img src=<%= three[index % three.length]%> width="100%" >
+                      <img src=<%= arr[ind][index % arr[ind].length] %> width="100%" >
                     </div>
                   </a>
               </div>
             <% } %>
           </div>
-          <div class="picture-column inline" >
-            <% for (var index = 0; index < four.length; index++) { %>
-              <div class="picture inline relative full-width">
-                      <div class="pictures-overlay full-width"></div>
-                    <div class="inline full-width">
-                      <img src=<%= four[index % four.length]%> width="100%" >
-                    </div>
-                  </a>
-              </div>
-            <% } %>
-          </div>
+        <% } %>
+
+
       </div>
     </div>
+    
 
 
   <div class="footer">
