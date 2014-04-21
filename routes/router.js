@@ -24,6 +24,8 @@ function route(req, res, webpage, options, callback)
 		res.render("view_repository", options);
 	} else if (webpage === "repo_messages") {
 		res.render("repo_messages", options);
+	} else if (webpage === "music") {
+		res.render("music", options);
 	} else {
 		res.render("not_found");
 	}

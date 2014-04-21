@@ -100,7 +100,9 @@ app.get("/", function (req, res) {
       	});
       });
 	} else {
-		router.route(req, res, "home");
+		db.findAllPictures(_db, function (err, ids, msgIds) {
+			return router.route(req, res, "home", {"Pictures": ids});
+		});
 	}
 });
 
@@ -205,6 +207,10 @@ app.get("/me", function (req, res) {
 	} else {
 		res.send(404);
 	}
+});
+
+app.get("/music", function (req, res) {
+	return router.route(req, res, "music");
 });
 
 app.get("/create", function (req, res) {
@@ -366,15 +372,47 @@ app.get("/repository/content/:userid/:pictureid", function (req, res) {
 		});
 });
 
-app.get("/repository/view/:userid/:pictureid", function (req, res) {
-	db.getMessages(_db, req, function (err, data) {
-		if (err) {
-			console.log(err);
-			return res.send(404);
-		}
-		router.route(req, res, "repo_messages", {"Image": "http://localhost:3000/repository/content/"
-			+ req.params.userid + "/" + req.params.pictureid, "Messages": data, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid});
-	});
+// app.get("/repository/view/:userid/:pictureid", function (req, res) {
+// 	db.getMessages(_db, req, function (err, data) {
+// 		if (err) {
+// 			console.log(err);
+// 			return res.send(404);
+// 		}
+// 		router.route(req, res, "repo_messages", {"Image": "http://localhost:3000/repository/content/"
+// 			+ req.params.userid + "/" + req.params.pictureid, "Messages": data, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid});
+// 	});
+// });
+
+app.get("/repository/:userid/:repository/:pictureid", function (req, res) {
+	if (req.cookies.loggedIn) {
+		db.getUser(_db, {"Username": req.params.userid}, function (err, account) {
+			if (err) {
+				res.send(500, {"Error": err});
+			} else if (!account) {
+				res.send(404, {"Error": "User not found!"});
+			} else {
+				if (account.Repositories[req.params.repository]) {
+					db.getMessages(_db, req, function (err, data) {
+						if (err) {
+							console.log(err);
+							return res.send(404);
+						}
+						router.route(req, res, "repo_messages", {"Image": "http://localhost:3000/repository/content/"
+							+ req.params.userid + "/" + req.params.pictureid, "Messages": data, "Creator": req.params.userid, "Creator_Link": "http://localhost:3000/users/" + req.params.userid, "Repository": req.params.repository, "Repository_Link": "http://localhost:3000/repository/" + req.params.userid + "/" + req.params.repository});
+					});
+				} else {
+					res.send(404, {"Error": "Picture does not exist"});
+				}
+			}
+		})
+
+
+
+
+	} else {
+		return res.redirect("/");
+	}
+
 });
 
 app.get("/repository/:userid/:repository", function (req, res) {
@@ -388,27 +426,31 @@ app.get("/repository/:userid/:repository", function (req, res) {
 			var images = [];
 			var tags = [];
 			var links = [];
-			for (var i = 0; i < account.Repositories[req.params.repository].Pictures.length; i++) {
-				images[i] = "http://localhost:3000/repository/content/" + req.params.userid + "/" + account.Repositories[req.params.repository].Pictures[i];
-				links[i] = "http://localhost:3000/repository/view/" + req.params.userid 
-					+ "/" + account.Repositories[req.params.repository].Pictures[i];
-			}
+			if (account.Repositories[req.params.repository]) {
 
-			for (var i = 0; i < account.Repositories[req.params.repository].tags.length; i++) {
-				for (var j = 0; j < account.Repositories[req.params.repository].tags[i].length; j++) {
-					tags.push(account.Repositories[req.params.repository].tags[i][j]);
+				for (var i = 0; i < account.Repositories[req.params.repository].Pictures.length; i++) {
+					images[i] = "http://localhost:3000/repository/content/" + req.params.userid + "/" + account.Repositories[req.params.repository].Pictures[i];
+					links[i] = "http://localhost:3000/repository/" + req.params.userid + "/" + req.params.repository + "/" + account.Repositories[req.params.repository].Pictures[i];
 				}
+
+				for (var i = 0; i < account.Repositories[req.params.repository].tags.length; i++) {
+					for (var j = 0; j < account.Repositories[req.params.repository].tags[i].length; j++) {
+						tags.push(account.Repositories[req.params.repository].tags[i][j]);
+					}
+				}
+				router.route(req, res, "view_repository", 
+					{
+						"Repo": images, 
+						"Creator": req.params.userid, 
+						"Creator_Link": "http://localhost:3000/users/" + req.params.userid, 
+						"Name": req.params.repository, 
+						"Tags": tags,
+						"Links": links
+					}
+				);
+			} else {
+				return res.send(404, {"Error": "Repository does not exist!"});
 			}
-			router.route(req, res, "view_repository", 
-				{
-					"Repo": images, 
-					"Creator": req.params.userid, 
-					"Creator_Link": "http://localhost:3000/users/" + req.params.userid, 
-					"Name": req.params.repository, 
-					"Tags": tags,
-					"Links": links
-				}
-			);
 		}
 	});
 	} else {
