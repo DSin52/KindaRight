@@ -1,0 +1,187 @@
+html {
+  min-width: 100%;
+  min-height: 100%;
+  height: 100%;
+}
+
+body {
+  /*position: relative;*/
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*background-color: #111;*/
+  min-width: 100%;
+  height: 100%;
+
+  background: #000;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.jp-type-single {
+  margin: 0 auto;
+  position: absolute;
+  width: 50%;
+  padding: 0;
+  top: 50%;
+}
+
+.jp-audio {
+  margin: 0 auto;
+  
+  width: 50%;
+  padding: 0;
+
+  top: 50%;
+}
+.jp-gui {
+  margin: 0 auto;
+  
+  width: 50%;
+  padding: 0;
+}
+
+.jp-gui {
+  width: 100%;
+}
+
+
+.jp-controls {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.jp-controls li {
+  margin: 0 auto;
+  display: inline;
+  
+}
+
+.jp-progress {
+  background: #000;
+  width: 50%;
+  height: 20px;
+  margin: 0 auto;
+
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.jp-seek-bar {
+  background: #0F0;
+  height: 100%;
+  width: 20px;
+
+  border-radius: 10px
+}
+
+.jp-play-bar {
+  background: #F00;
+  height: 100%;
+  width: 10px;
+
+  border-radius: 10px;
+}
+
+.jp-title {
+  color: #FFF;
+}
+
+.jp-repeat,
+.jp-repeat-off {
+  color: #FFF;
+}
+
+
+
+.jp-toggles {
+  margin: 0;
+  padding: 0;
+}
+
+.jp-repeat, 
+.jp-repeat-off {
+  margin: 0 auto;
+  padding: 0;
+}
+
+.jp-volume-bar {
+  margin: 0 auto;
+  background: #555;
+  width: 50%;
+  height: 20px;
+
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.jp-volume-bar-value {
+  background: #0FF;
+  width: 20px;
+  height: 20px;
+
+  border-radius: 10px;
+}
+
+.jp-time-holder {
+  
+  margin: 0 auto;
+  text-align: center;
+  color: #FFF
+}
+
+.jp-current-time,
+.jp-repeat,
+.jp-repeat-off,
+.jp-duration {
+  
+  display: inline;
+  width: auto;
+  color: #FFF;
+}
+
+.jp-details {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cloudcc {
+  position:absolute;
+  background: #f00 url('/images/clouds.png') repeat;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  left: -50%;
+
+  
+  -webkit-transition: -webkit-transform 10s;
+  -webkit-filter: blur(20px);
+
+}
+
+.cloudcc:hover {
+  -webkit-transform: rotate(-180deg);
+}
+
+.cloudcw {
+  position:absolute;
+  background: rgba(0,0,0,0) url('/images/clouds.png') repeat;
+  top: -50%;
+  bottom: -50%;
+  right: -50%;
+  left: -50%;
+
+  
+  -webkit-transition: -webkit-transform 10s;
+  -webkit-filter: blur(20px);
+
+}
+
+.cloudcw:hover {
+  -webkit-transform: rotate(180deg);
+}
+
