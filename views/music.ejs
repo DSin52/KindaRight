@@ -39,6 +39,7 @@ $(document).ready(function(){
 <body>
 	
 	<div class="cloudcc"></div>
+	<div class="cloudcw"></div>
 		<div id="jquery_jplayer_1" class="jp-jplayer"></div>
 
 		<div id="jp_container_1" class="jp-audio">
@@ -50,6 +51,13 @@ $(document).ready(function(){
 				</div>
 				<div class="jp-gui jp-interface">
 					<ul class="jp-controls">
+						<li><a href="javascript:;"  class="jp-repeat" tabindex="1" title="repeat">
+								<img src="/images/play-controls/repeat.png" class="jp-icons2" alt="">
+							</a></li>
+							<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">
+								<img src="/images/play-controls/no-repeat.png" class="jp-icons2" alt="">
+							</a></li>
+						</li>
 						<li><a href="javascript:;" class="jp-play" tabindex="1">
 								<img class="jp-icons" src="/images/play-controls/play.png">
 							</a></li>
@@ -59,38 +67,35 @@ $(document).ready(function(){
 						</li>
 						<li><a href="javascript:;" class="jp-stop" tabindex="1">
 								<img class="jp-icons" src="/images/play-controls/stop.png" alt="">		
-							</a>
+							</a></li>
+						<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">
+									<img class="jp-icons2" src="/images/play-controls/mute.png" alt="">
+								</a>
+							</li>
+							<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">
+									<img class="jp-icons2" src="/images/play-controls/unmute.png" alt="">		
+								</a>
+							</li>
 						
 						<!-- <li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">
 								
 							</a>
 						</li> -->
 					</ul>
+					<div class="jp-time-holder">
+						<div class="jp-current-time"></div> /
+						<div class="jp-duration"></div>
+					</div>
 					<div class="jp-progress">
 						<div class="jp-seek-bar">
 							<div class="jp-play-bar"></div>
 						</div>
 					</div>
+					
 					<div class="jp-time-holder">
-						<div class="jp-current-time"></div> /
-						<div class="jp-duration"></div>
-
 						<ul class="jp-toggles">
-							<li><a href="javascript:;"  class="jp-repeat" tabindex="1" title="repeat">
-								<img src="/images/play-controls/repeat.png" class="jp-icons" alt="">
-							</a></li>
-							<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">
-								<img src="/images/play-controls/no-repeat.png" class="jp-icons" alt="">
-							</a></li>
-							</li>
-							<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">
-									<img class="jp-icons" src="/images/play-controls/mute.png" alt="">
-								</a>
-							</li>
-							<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">
-									<img class="jp-icons" src="/images/play-controls/unmute.png" alt="">		
-								</a>
-							</li>
+							
+							
 						</ul>
 					</div>
 					<div class="jp-volume-bar">
