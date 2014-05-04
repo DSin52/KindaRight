@@ -11,7 +11,7 @@ body {
   min-width: 100%;
   height: 100%;
 
-  background: #000;
+  /*background: #000;*/
 }
 
 li {
@@ -186,7 +186,7 @@ a {
 }
 
 body {
-  
+  background-size: #FFF;
   background: rgba(0,0,0,1) url("../images/music-bg.jpg") repeat;
   background-size: cover;
 
@@ -196,7 +196,7 @@ body {
 .first {
   z-index: -11;
   position:absolute;
-  background: rgba(0, 0, 0, 0);
+  background: rgba(30, 30, 30, 0.6);
   opacity: 1;
   top: 0;
   bottom: 0;
@@ -211,7 +211,7 @@ body {
 .second {
   z-index: -11;
   position:absolute;
-  background: rgba(0, 0, 0, .5);
+  background: rgba(0, 0, 0, .9);
   opacity: 1;
   top: 0;
   bottom: 0;
@@ -227,24 +227,18 @@ body {
 }*/
 
 
-
-.cloudcw {
+.music-fg {
   z-index: -10;
-  position:absolute;
-  background: rgba(0,0,0,1) repeat;
-  background-size: 100%;
-  top: -50%;
-  opacity: .5;
-  bottom: -50%;
-  right: -50%;
-  left: -50%;
+  position: absolute;
+  opacity: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 
-  
-  -webkit-transition: opacity 3s;
-  -webkit-filter: blur(20px);
-
+  background: rgba(0,0,0,0) url("../images/music-fgr.png");
+  background-size: cover;
 }
-
 
 
 

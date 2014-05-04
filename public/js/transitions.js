@@ -3,6 +3,7 @@ var play = document.querySelector(".jp-play");
 var pause = document.querySelector(".jp-pause");
 var stop = document.querySelector(".jp-stop");
 var looping = false;
+var val = 50;
 
 function setup () {
 	play.addEventListener("click", construct, false);
