@@ -169,19 +169,23 @@
           arr[3] = new Array();
           
           var o = 0, t = 0, th = 0, f = 0, i = 0;
-          Pictures.forEach(function(n){ 
-            if ( i == 0)
-              arr[0][o++] = n;
-            if ( i == 1)
-              arr[1][t++] = n;
-            if ( i == 2)
-              arr[2][th++] = n;
-            if ( i == 3)
-              arr[3][f++] = n;
+          if (Pictures != null) {
+            Pictures.forEach(function(n){ 
+              if ( i == 0)
+                arr[0][o++] = n;
+              if ( i == 1)
+                arr[1][t++] = n;
+              if ( i == 2)
+                arr[2][th++] = n;
+              if ( i == 3)
+                arr[3][f++] = n;
 
-            i = (i + 1) % 4;
-          })
-
+              i = (i + 1) % 4;
+            })
+          }
+          else {
+          
+          }
           for (var ind = 0; ind < arr.length; ind++) {
         %>
           <div class="picture-column inline" >

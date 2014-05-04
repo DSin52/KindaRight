@@ -1674,7 +1674,7 @@ $(window).load(function() {
       if(this.css.jq.playBar.length) {
         if(this.options.smoothPlayBar) {
           this.css.jq.playBar.stop().animate({
-            left: this.status.currentPercentAbsolute+"%"
+            width: this.status.currentPercentAbsolute+"%"
           }, 250, "linear");
         } else {
           this.css.jq.playBar.left(this.status.currentPercentRelative+"%");
