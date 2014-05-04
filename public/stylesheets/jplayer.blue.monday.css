@@ -196,14 +196,14 @@ body {
 .first {
   z-index: -11;
   position:absolute;
-  background: rgba(150, 0, 150, .5);
+  background: rgba(0, 0, 0, 0);
   opacity: 1;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
 
-  -webkit-transition: background 10s;
+  -webkit-transition: background 10s ease-out;
   /*-webkit-filter: blur(20px);*/
 
 }
@@ -211,14 +211,14 @@ body {
 .second {
   z-index: -11;
   position:absolute;
-  background: rgba(0, 0, 115, .5);
+  background: rgba(0, 0, 0, .5);
   opacity: 1;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   
-  -webkit-transition: background 10s;
+  -webkit-transition: background 10s ease-in;
   /*-webkit-filter: blur(20px);*/
 
 }
