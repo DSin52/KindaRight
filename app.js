@@ -107,7 +107,9 @@ app.get("/", function (req, res) {
 });
 
 app.get("/create", function (req, res) {
-	router.route(req, res, "home");
+	db.findAllPictures(_db, function (err, ids, msgIds) {
+			return router.route(req, res, "home", {"Pictures": ids});
+		});
 });
 
 app.post("/main", function(req, res, next) {
@@ -213,10 +215,6 @@ app.get("/music", function (req, res) {
 	return router.route(req, res, "music");
 });
 
-app.get("/create", function (req, res) {
-	res.redirect("/");
-});
-
 app.post("/create", function (req, res) {
 	var User = {
 		"First_Name": req.body.First_Name,
@@ -241,7 +239,9 @@ app.post("/create", function (req, res) {
 						res.send(res.statusCode, {"Error": err});
 						console.log(err);
 					}
-					router.route(req, res, "home");
+					db.findAllPictures(_db, function (err, ids, msgIds) {
+						return router.route(req, res, "home", {"Pictures": ids});
+					});
 				});
 	  		});
 		}
