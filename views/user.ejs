@@ -12,16 +12,17 @@
     <link rel="stylesheet" type="text/css" href="/ui.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
 
   </head>
-  <body class="texture-bg">
+  <body>
   
   <!-- NavBar Object -->
 	  <% include includes/navbar.ejs %>
   	<!-- End NavBar Object -->
   	<div class="page accent-head">
   		
-  	    <p id="userId"><%= First_Name %> <%=Last_Name %></p>
-  	    <h3 id="discipline">Discipline: <%= Discipline %></h3>
-		<img src=<%=Profile_Picture %> height="150" width="125">
+      <img src=<%=Profile_Picture %> height="150" class="profile_photo">
+	    <p id="userId"><%= First_Name %> <%=Last_Name %></p>
+	    <h3 id="discipline"><%= Discipline %></h3>
+	    
 
 	</div>
 	<div class="page">

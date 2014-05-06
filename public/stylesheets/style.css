@@ -47,6 +47,8 @@ h3 {
 	color: #FFF;
 	font-size: 24pt;
 	font-family: 'Josefin Sans', serif;
+	margin-top: 0;
+	margin-bottom: 20px;
 }
 
 li {
@@ -393,6 +395,11 @@ background-size: 100%;
 /*-webkit-transition: background 1s linear;*/
 }
 
+.profile_photo {
+	padding-right: 10px;
+	float: left;
+}
+
 #intro {
 background: url("/images/intro.jpg") no-repeat center;
 background-size: 100% 100%;
@@ -451,6 +458,8 @@ background-size: 100%;
 #userId {
 	font-size: 55px;
 	color: white;
+	margin-bottom: 0px;
+	padding-bottom: 0px;
 }
 
 #repos {
